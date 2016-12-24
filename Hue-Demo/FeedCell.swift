@@ -18,6 +18,7 @@ class FeedCell: UICollectionViewCell {
     @IBOutlet weak var uploadedImageComments: UILabel!
     @IBOutlet weak var elapsedTimeSinceUpload: UILabel!
     
+    @IBOutlet weak var commentButton: UIButton!
     
     var image : Image?{
         didSet{

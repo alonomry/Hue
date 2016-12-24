@@ -10,7 +10,7 @@
 		13A0CDA520F0AA5E1B46A87A /* Pods_Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CC767D62DD982DD70B3340 /* Pods_Hue.framework */; };
 		CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386B81E0D72BA006FF919 /* AppDelegate.swift */; };
 		CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */; };
-		CD1386BD1E0D72BA006FF919 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BC1E0D72BA006FF919 /* SecondViewController.swift */; };
+		CD1386BD1E0D72BA006FF919 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BC1E0D72BA006FF919 /* SearchCollectionViewController.swift */; };
 		CD1386C01E0D72BA006FF919 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1386BE1E0D72BA006FF919 /* Main.storyboard */; };
 		CD1386C21E0D72BA006FF919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1386C11E0D72BA006FF919 /* Assets.xcassets */; };
 		CD1386C51E0D72BA006FF919 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1386C31E0D72BA006FF919 /* LaunchScreen.storyboard */; };
@@ -22,6 +22,12 @@
 		CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AA1E0E7B370019AA39 /* Comment.swift */; };
 		CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AD1E0E83D50019AA39 /* Extention.swift */; };
 		CDC120D11E0E949B0019AA39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */; };
+		DF659C2C1E0ECD5500E3ACBD /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */; };
+		DF659C2E1E0ECE2100E3ACBD /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C2D1E0ECE2100E3ACBD /* SearchCell.swift */; };
+		DF659C301E0ED35E00E3ACBD /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C2F1E0ED35E00E3ACBD /* ExploreController.swift */; };
+		DF659C321E0EDA1600E3ACBD /* CommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF659C311E0EDA1600E3ACBD /* CommentsCell.xib */; };
+		DF659C341E0EDD7D00E3ACBD /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C331E0EDD7D00E3ACBD /* CommentsCell.swift */; };
+		DF659C361E0EDE2D00E3ACBD /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C351E0EDE2D00E3ACBD /* CommentsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +36,7 @@
 		CD1386B51E0D72BA006FF919 /* Hue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1386B81E0D72BA006FF919 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		CD1386BC1E0D72BA006FF919 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		CD1386BC1E0D72BA006FF919 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
 		CD1386BF1E0D72BA006FF919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD1386C11E0D72BA006FF919 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD1386C41E0D72BA006FF919 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -43,6 +49,12 @@
 		CDC120AA1E0E7B370019AA39 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		CDC120AD1E0E83D50019AA39 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		DF659C2D1E0ECE2100E3ACBD /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		DF659C2F1E0ED35E00E3ACBD /* ExploreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
+		DF659C311E0EDA1600E3ACBD /* CommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsCell.xib; sourceTree = "<group>"; };
+		DF659C331E0EDD7D00E3ACBD /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
+		DF659C351E0EDE2D00E3ACBD /* CommentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
 		EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hue/Pods-Hue.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +118,9 @@
 			isa = PBXGroup;
 			children = (
 				CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */,
-				CD1386BC1E0D72BA006FF919 /* SecondViewController.swift */,
+				CD1386BC1E0D72BA006FF919 /* SearchCollectionViewController.swift */,
+				DF659C2F1E0ED35E00E3ACBD /* ExploreController.swift */,
+				DF659C351E0EDE2D00E3ACBD /* CommentsController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -124,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				CD1386D41E0DDD88006FF919 /* FeedCell.swift */,
+				DF659C2D1E0ECE2100E3ACBD /* SearchCell.swift */,
+				DF659C331E0EDD7D00E3ACBD /* CommentsCell.swift */,
 			);
 			name = CustomCells;
 			sourceTree = "<group>";
@@ -133,6 +149,8 @@
 			children = (
 				CD1386CE1E0DC607006FF919 /* feedCell.xib */,
 				CD1386D01E0DD743006FF919 /* feed.xib */,
+				DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */,
+				DF659C311E0EDA1600E3ACBD /* CommentsCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -231,8 +249,10 @@
 				CD1386C51E0D72BA006FF919 /* LaunchScreen.storyboard in Resources */,
 				CD1386CF1E0DC607006FF919 /* feedCell.xib in Resources */,
 				CD1386C21E0D72BA006FF919 /* Assets.xcassets in Resources */,
+				DF659C2C1E0ECD5500E3ACBD /* SearchCell.xib in Resources */,
 				CD1386C01E0D72BA006FF919 /* Main.storyboard in Resources */,
 				CDC120D11E0E949B0019AA39 /* GoogleService-Info.plist in Resources */,
+				DF659C321E0EDA1600E3ACBD /* CommentsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,11 +312,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */,
+				DF659C301E0ED35E00E3ACBD /* ExploreController.swift in Sources */,
 				CD1386D51E0DDD88006FF919 /* FeedCell.swift in Sources */,
 				CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */,
 				CDC120A71E0E788F0019AA39 /* Image.swift in Sources */,
+				DF659C361E0EDE2D00E3ACBD /* CommentsController.swift in Sources */,
+				DF659C2E1E0ECE2100E3ACBD /* SearchCell.swift in Sources */,
+				DF659C341E0EDD7D00E3ACBD /* CommentsCell.swift in Sources */,
 				CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */,
-				CD1386BD1E0D72BA006FF919 /* SecondViewController.swift in Sources */,
+				CD1386BD1E0D72BA006FF919 /* SearchCollectionViewController.swift in Sources */,
 				CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */,
 				CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */,
 			);
@@ -423,6 +447,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -436,6 +461,7 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
 				PRODUCT_NAME = "$(TARGET_NAME)";

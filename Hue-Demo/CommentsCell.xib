@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentsCell" rowHeight="85" id="dm3-cE-sL1" customClass="CommentsCell" customModule="Hue" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="482" height="85"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dm3-cE-sL1" id="80m-uA-m1i">
+                <rect key="frame" x="0.0" y="0.0" width="482" height="84"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lzx-AU-mIj">
+                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="drg-nn-dWf"/>
+                            <constraint firstAttribute="height" constant="44" id="zRS-aq-XGX"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pej-WZ-OJ7">
+                        <rect key="frame" x="60" y="8" width="414" height="68"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="pej-WZ-OJ7" firstAttribute="top" secondItem="80m-uA-m1i" secondAttribute="top" constant="8" id="4Lr-ie-aLQ"/>
+                    <constraint firstAttribute="bottom" secondItem="pej-WZ-OJ7" secondAttribute="bottom" constant="8" id="4ux-x1-4Ne"/>
+                    <constraint firstItem="pej-WZ-OJ7" firstAttribute="leading" secondItem="Lzx-AU-mIj" secondAttribute="trailing" constant="8" id="5Ns-eG-YVN"/>
+                    <constraint firstItem="pej-WZ-OJ7" firstAttribute="leading" secondItem="Lzx-AU-mIj" secondAttribute="trailing" constant="8" id="6zH-06-lCQ"/>
+                    <constraint firstAttribute="trailing" secondItem="pej-WZ-OJ7" secondAttribute="trailing" constant="8" id="Zx6-FW-1Zo"/>
+                    <constraint firstItem="Lzx-AU-mIj" firstAttribute="leading" secondItem="80m-uA-m1i" secondAttribute="leading" constant="8" id="pkx-16-t8D"/>
+                    <constraint firstItem="Lzx-AU-mIj" firstAttribute="top" secondItem="80m-uA-m1i" secondAttribute="top" constant="8" id="rhI-Yc-ntH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="Comment" destination="pej-WZ-OJ7" id="RDx-Sj-oHz"/>
+                <outlet property="CommentProfileImage" destination="Lzx-AU-mIj" id="725-X6-SZ8"/>
+            </connections>
+            <point key="canvasLocation" x="-47" y="-130.5"/>
+        </tableViewCell>
+    </objects>
+</document>
