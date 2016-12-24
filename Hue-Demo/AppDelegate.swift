@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,8 +16,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        UITabBar.appearance().tintColor = UIColor.black 
+        
+        FIRApp.configure()
+        
+        if FIRAuth.auth()?.currentUser?.uid == nil {
+
+        }
+        
+        FIRAuth.auth()?.signIn(withEmail: "omryno1@icloud.com", password: "123456", completion: { (user : FIRUser?, error : Error?) in
+            if error != nil {
+                print (error!)
+            }else{
+                let adminUser = Profile()
+                adminUser.profileUID = user?.uid
+                adminUser.profileName = "Omry Dabush"
+                adminUser.profileDescription = "Bla and Bla"
+                adminUser.numOfPosts = 100
+                let databaseReference = FIRDatabase.database().reference().child("Users")
+                //                    let userDatabaseReference = databaseReference.child(<#T##pathString: String##String#>)
+                databaseReference.setValue(adminUser.toAnyObject())
+            }
+        })
+        UITabBar.appearance().tintColor = UIColor.black
+        
+        
         return true
     }
 

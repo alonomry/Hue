@@ -18,4 +18,12 @@ class Profile: NSObject {
     var numOfPosts : NSNumber?
     var numOfFollowers : NSNumber?
     var numOfFollowing : NSNumber?
+    
+    
+    func toAnyObject() -> AnyObject {
+        let toAnyObject : [String : AnyObject] = ["UID" : profileUID as AnyObject, "Name" : profileName as AnyObject, "Description" : profileDescription as AnyObject]
+        return toAnyObject as AnyObject
+    }
 }
+
+

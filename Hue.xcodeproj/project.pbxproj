@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13A0CDA520F0AA5E1B46A87A /* Pods_Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CC767D62DD982DD70B3340 /* Pods_Hue.framework */; };
 		CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386B81E0D72BA006FF919 /* AppDelegate.swift */; };
 		CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */; };
 		CD1386BD1E0D72BA006FF919 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BC1E0D72BA006FF919 /* SecondViewController.swift */; };
@@ -20,9 +21,12 @@
 		CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120A81E0E79C80019AA39 /* Profile.swift */; };
 		CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AA1E0E7B370019AA39 /* Comment.swift */; };
 		CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AD1E0E83D50019AA39 /* Extention.swift */; };
+		CDC120D11E0E949B0019AA39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40CC767D62DD982DD70B3340 /* Pods_Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C199128B021472438A88919E /* Pods-Hue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hue/Pods-Hue.release.xcconfig"; sourceTree = "<group>"; };
 		CD1386B51E0D72BA006FF919 /* Hue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1386B81E0D72BA006FF919 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +42,8 @@
 		CDC120A81E0E79C80019AA39 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		CDC120AA1E0E7B370019AA39 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		CDC120AD1E0E83D50019AA39 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
+		CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hue/Pods-Hue.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +51,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13A0CDA520F0AA5E1B46A87A /* Pods_Hue.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E79CA95EADF787FDB3115E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				40CC767D62DD982DD70B3340 /* Pods_Hue.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CD1386AC1E0D72BA006FF919 = {
 			isa = PBXGroup;
 			children = (
 				CD1386B71E0D72BA006FF919 /* Hue */,
 				CD1386B61E0D72BA006FF919 /* Products */,
+				DB2470362A05F60CBCDD3D39 /* Pods */,
+				9E79CA95EADF787FDB3115E8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,6 +96,7 @@
 				CD1386C11E0D72BA006FF919 /* Assets.xcassets */,
 				CD1386B81E0D72BA006FF919 /* AppDelegate.swift */,
 				CD1386C61E0D72BA006FF919 /* Info.plist */,
+				CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */,
 			);
 			name = Hue;
 			path = "Hue-Demo";
@@ -137,6 +155,15 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		DB2470362A05F60CBCDD3D39 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */,
+				C199128B021472438A88919E /* Pods-Hue.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +171,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD1386C91E0D72BA006FF919 /* Build configuration list for PBXNativeTarget "Hue" */;
 			buildPhases = (
+				10447A79DFB525812213E587 /* [CP] Check Pods Manifest.lock */,
 				CD1386B11E0D72BA006FF919 /* Sources */,
 				CD1386B21E0D72BA006FF919 /* Frameworks */,
 				CD1386B31E0D72BA006FF919 /* Resources */,
+				97B7E0222D84F33E797B7321 /* [CP] Embed Pods Frameworks */,
+				E0D0591050024B1ECE1B318F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -202,10 +232,59 @@
 				CD1386CF1E0DC607006FF919 /* feedCell.xib in Resources */,
 				CD1386C21E0D72BA006FF919 /* Assets.xcassets in Resources */,
 				CD1386C01E0D72BA006FF919 /* Main.storyboard in Resources */,
+				CDC120D11E0E949B0019AA39 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		10447A79DFB525812213E587 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		97B7E0222D84F33E797B7321 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hue/Pods-Hue-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0D0591050024B1ECE1B318F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hue/Pods-Hue-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CD1386B11E0D72BA006FF919 /* Sources */ = {
@@ -340,6 +419,7 @@
 		};
 		CD1386CA1E0D72BA006FF919 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
@@ -352,6 +432,7 @@
 		};
 		CD1386CB1E0D72BA006FF919 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C199128B021472438A88919E /* Pods-Hue.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
