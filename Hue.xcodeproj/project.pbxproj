@@ -54,7 +54,7 @@
 		CD1386AC1E0D72BA006FF919 = {
 			isa = PBXGroup;
 			children = (
-				CD1386B71E0D72BA006FF919 /* Hue-Demo */,
+				CD1386B71E0D72BA006FF919 /* Hue */,
 				CD1386B61E0D72BA006FF919 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CD1386B71E0D72BA006FF919 /* Hue-Demo */ = {
+		CD1386B71E0D72BA006FF919 /* Hue */ = {
 			isa = PBXGroup;
 			children = (
 				CDC120AC1E0E83C00019AA39 /* Helpers */,
@@ -80,6 +80,7 @@
 				CD1386B81E0D72BA006FF919 /* AppDelegate.swift */,
 				CD1386C61E0D72BA006FF919 /* Info.plist */,
 			);
+			name = Hue;
 			path = "Hue-Demo";
 			sourceTree = "<group>";
 		};
@@ -168,6 +169,7 @@
 				TargetAttributes = {
 					CD1386B41E0D72BA006FF919 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 79LH43EPL7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -339,7 +341,7 @@
 		CD1386CA1E0D72BA006FF919 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
@@ -351,7 +353,7 @@
 		CD1386CB1E0D72BA006FF919 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
