@@ -7,14 +7,41 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var mainFeedCollectioView: UICollectionView!
     
 
+    @IBAction func logoutButtonWasPressed(_ sender: Any) {
+        handleLogout()
+    }
+    
+    func handleLogout(){
+        do{
+            try FIRAuth.auth()?.signOut()
+        }catch let logoutError{
+            print(logoutError)
+        }
+        let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
+        self.present(loginVC!, animated: true, completion: nil)
+        
+    }
+
+
+    func verifyLoginUser(){
+        let user = FIRAuth.auth()?.currentUser
+        if (user?.uid == nil){
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        }else{
+            //already loggedin
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        verifyLoginUser()
         setupNavBar()
         setupCollectionView()
     }

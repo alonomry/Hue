@@ -17,6 +17,10 @@
 		CD1386CF1E0DC607006FF919 /* feedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1386CE1E0DC607006FF919 /* feedCell.xib */; };
 		CD1386D11E0DD743006FF919 /* feed.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1386D01E0DD743006FF919 /* feed.xib */; };
 		CD1386D51E0DDD88006FF919 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386D41E0DDD88006FF919 /* FeedCell.swift */; };
+		CDA0B8CE1E117321005D3CB8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8CD1E117321005D3CB8 /* LoginController.swift */; };
+		CDA0B8D01E117353005D3CB8 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8CF1E117353005D3CB8 /* SignupController.swift */; };
+		CDA0B8D21E1180E9005D3CB8 /* Jitterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */; };
+		CDA0B8D41E1180F6005D3CB8 /* Flashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8D31E1180F6005D3CB8 /* Flashable.swift */; };
 		CDC120A71E0E788F0019AA39 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120A61E0E788F0019AA39 /* Image.swift */; };
 		CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120A81E0E79C80019AA39 /* Profile.swift */; };
 		CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AA1E0E7B370019AA39 /* Comment.swift */; };
@@ -38,6 +42,10 @@
 		CD1386CE1E0DC607006FF919 /* feedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = feedCell.xib; sourceTree = "<group>"; };
 		CD1386D01E0DD743006FF919 /* feed.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = feed.xib; sourceTree = "<group>"; };
 		CD1386D41E0DDD88006FF919 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		CDA0B8CD1E117321005D3CB8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		CDA0B8CF1E117353005D3CB8 /* SignupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
+		CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jitterable.swift; sourceTree = "<group>"; };
+		CDA0B8D31E1180F6005D3CB8 /* Flashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashable.swift; sourceTree = "<group>"; };
 		CDC120A61E0E788F0019AA39 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CDC120A81E0E79C80019AA39 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		CDC120AA1E0E7B370019AA39 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -107,6 +115,8 @@
 			children = (
 				CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */,
 				CD1386BC1E0D72BA006FF919 /* SecondViewController.swift */,
+				CDA0B8CD1E117321005D3CB8 /* LoginController.swift */,
+				CDA0B8CF1E117353005D3CB8 /* SignupController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -151,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				CDC120AD1E0E83D50019AA39 /* Extention.swift */,
+				CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */,
+				CDA0B8D31E1180F6005D3CB8 /* Flashable.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -294,9 +306,13 @@
 				CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */,
 				CD1386D51E0DDD88006FF919 /* FeedCell.swift in Sources */,
 				CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */,
+				CDA0B8D01E117353005D3CB8 /* SignupController.swift in Sources */,
+				CDA0B8D41E1180F6005D3CB8 /* Flashable.swift in Sources */,
 				CDC120A71E0E788F0019AA39 /* Image.swift in Sources */,
+				CDA0B8CE1E117321005D3CB8 /* LoginController.swift in Sources */,
 				CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */,
 				CD1386BD1E0D72BA006FF919 /* SecondViewController.swift in Sources */,
+				CDA0B8D21E1180E9005D3CB8 /* Jitterable.swift in Sources */,
 				CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */,
 				CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */,
 			);
