@@ -1,2 +1,2 @@
 
-#import 'DZNPhotoPickerController/DZNPhotoPickerController.h'
+#import <RSKImageCropper/RSKImageCropper.h>

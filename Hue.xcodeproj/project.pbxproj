@@ -52,6 +52,7 @@
 		CDA0B8CF1E117353005D3CB8 /* SignupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jitterable.swift; sourceTree = "<group>"; };
 		CDA0B8D31E1180F6005D3CB8 /* Flashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashable.swift; sourceTree = "<group>"; };
+		CDA342DD1E119A040046E9EA /* Hue-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hue-Bridging-Header.h"; sourceTree = "<group>"; };
 		CDC120A61E0E788F0019AA39 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CDC120A81E0E79C80019AA39 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		CDC120AA1E0E7B370019AA39 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 				CD1386B81E0D72BA006FF919 /* AppDelegate.swift */,
 				CD1386C61E0D72BA006FF919 /* Info.plist */,
 				CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */,
+				CDA342DD1E119A040046E9EA /* Hue-Bridging-Header.h */,
 			);
 			name = Hue;
 			path = "Hue-Demo";
@@ -230,6 +232,7 @@
 					CD1386B41E0D72BA006FF919 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 79LH43EPL7;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -461,11 +464,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hue-Demo/Hue-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -474,11 +480,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C199128B021472438A88919E /* Pods-Hue.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Hue-Demo/Hue-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

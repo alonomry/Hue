@@ -8,10 +8,7 @@
 
 import UIKit
 
-class SignupController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
-    
-
+class SignupController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RSKImageCropViewControllerDelegate{
     
     @IBOutlet weak var emailAddressTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -25,6 +22,25 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
 
 
     @IBAction func pickProfileImageButtonWasPressed(_ sender: Any) {
+        handleProfileImagePick()
+    }
+    
+    @IBAction func signinButtonWasPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureAssets()
+    }
+    
+    func configureAssets(){
+        signupButton.layer.cornerRadius = 20
+        profileImageButton.layer.masksToBounds = false
+    }
+    
+    
+    func handleProfileImagePick(){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
@@ -49,39 +65,40 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    @IBAction func signinButtonWasPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureAssets()
-    }
-    
-    func configureAssets(){
-        signupButton.layer.cornerRadius = 20
-        profileImageButton.layer.masksToBounds = false
-    }
-    
+//Delegate methods of UIImagePickerController
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        var pickedImage : UIImage?
-        
-        pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        
-        profileImageButton.setImage(pickedImage, for: .normal)
-        profileImageButton.layer.cornerRadius = 44
-        profileImageButton.layer.masksToBounds = true
-        
-        
-        
-        picker.dismiss(animated: true, completion: nil)
-        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            picker.dismiss(animated: true, completion: {
+                let imageCropVC = RSKImageCropViewController(image: pickedImage, cropMode: .circle)
+                imageCropVC.delegate = self
+                self.present(imageCropVC, animated: true, completion: nil)
+            })
         }
-
-
+    }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+//Delegate methods of theRSKImageCropViewController
+    
+    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+        self.profileImageButton.setImage(croppedImage, for: .normal)
+        self.profileImageButton.layer.cornerRadius = 44
+        self.profileImageButton.layer.masksToBounds = true
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }
+
+
+
+
+
+
+
+
