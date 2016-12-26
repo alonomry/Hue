@@ -10,8 +10,8 @@ import UIKit
 
 class SearchCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var SearchNavBar: UINavigationItem!
     
+    @IBOutlet weak var searchNavBar: UINavigationItem!
     @IBOutlet weak var searchCollectionView: UICollectionView!
   //  var images:[Picture]?
     var index:NSIndexPath?

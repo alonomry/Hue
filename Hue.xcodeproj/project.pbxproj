@@ -10,7 +10,6 @@
 		13A0CDA520F0AA5E1B46A87A /* Pods_Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CC767D62DD982DD70B3340 /* Pods_Hue.framework */; };
 		CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386B81E0D72BA006FF919 /* AppDelegate.swift */; };
 		CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */; };
-		CD1386BD1E0D72BA006FF919 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BC1E0D72BA006FF919 /* SearchCollectionViewController.swift */; };
 		CD1386C01E0D72BA006FF919 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1386BE1E0D72BA006FF919 /* Main.storyboard */; };
 		CD1386C21E0D72BA006FF919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1386C11E0D72BA006FF919 /* Assets.xcassets */; };
 		CD1386C51E0D72BA006FF919 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1386C31E0D72BA006FF919 /* LaunchScreen.storyboard */; };
@@ -21,6 +20,7 @@
 		CDA0B8D01E117353005D3CB8 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8CF1E117353005D3CB8 /* SignupController.swift */; };
 		CDA0B8D21E1180E9005D3CB8 /* Jitterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */; };
 		CDA0B8D41E1180F6005D3CB8 /* Flashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8D31E1180F6005D3CB8 /* Flashable.swift */; };
+		CDA342DC1E1194CA0046E9EA /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BC1E0D72BA006FF919 /* SearchCollectionViewController.swift */; };
 		CDC120A71E0E788F0019AA39 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120A61E0E788F0019AA39 /* Image.swift */; };
 		CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120A81E0E79C80019AA39 /* Profile.swift */; };
 		CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AA1E0E7B370019AA39 /* Comment.swift */; };
@@ -126,7 +126,9 @@
 			isa = PBXGroup;
 			children = (
 				CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */,
-				CD1386BC1E0D72BA006FF919 /* SecondViewController.swift */,
+				DF659C2F1E0ED35E00E3ACBD /* ExploreController.swift */,
+				DF659C351E0EDE2D00E3ACBD /* CommentsController.swift */,
+				CD1386BC1E0D72BA006FF919 /* SearchCollectionViewController.swift */,
 				CDA0B8CD1E117321005D3CB8 /* LoginController.swift */,
 				CDA0B8CF1E117353005D3CB8 /* SignupController.swift */,
 			);
@@ -329,8 +331,11 @@
 				CDA0B8D41E1180F6005D3CB8 /* Flashable.swift in Sources */,
 				CDC120A71E0E788F0019AA39 /* Image.swift in Sources */,
 				CDA0B8CE1E117321005D3CB8 /* LoginController.swift in Sources */,
+				DF659C361E0EDE2D00E3ACBD /* CommentsController.swift in Sources */,
+				DF659C2E1E0ECE2100E3ACBD /* SearchCell.swift in Sources */,
+				DF659C341E0EDD7D00E3ACBD /* CommentsCell.swift in Sources */,
 				CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */,
-				CD1386BD1E0D72BA006FF919 /* SecondViewController.swift in Sources */,
+				CDA342DC1E1194CA0046E9EA /* SearchCollectionViewController.swift in Sources */,
 				CDA0B8D21E1180E9005D3CB8 /* Jitterable.swift in Sources */,
 				CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */,
 				CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */,
@@ -458,7 +463,6 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -472,7 +476,6 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OD.Hue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
