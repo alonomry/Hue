@@ -12,11 +12,19 @@ import Firebase
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var mainFeedCollectioView: UICollectionView!
-    
 
     @IBAction func logoutButtonWasPressed(_ sender: Any) {
         handleLogout()
     }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        verifyLoginUser()
+        setupNavBar()
+        setupCollectionView()
+    }
+    
     
     func handleLogout(){
         do{
@@ -39,12 +47,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        verifyLoginUser()
-        setupNavBar()
-        setupCollectionView()
-    }
+
 
     func setupNavBar(){
         let logo = UIImage(named: "logo")
@@ -60,6 +63,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    @IBAction func unwindFromSignUp(segue : UIStoryboardSegue){
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4

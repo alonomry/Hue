@@ -93,7 +93,7 @@
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
@@ -238,7 +238,7 @@
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nFD-uk-jXR">
                                         <rect key="frame" x="0.0" y="90" width="225" height="30"/>
@@ -292,7 +292,16 @@
                                 <state key="normal" title="Sign up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="signupButtonWasPressed:" destination="OmP-Jw-vHx" eventType="touchUpInside" id="rhO-yf-k1B"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjl-hw-VsH">
+                                <rect key="frame" x="75" y="359" width="225" height="18"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
+                                <color key="textColor" red="0.89693052029999998" green="0.13417256380000001" blue="0.0077492855289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -301,13 +310,17 @@
                             <constraint firstAttribute="trailingMargin" secondItem="s4c-Ql-fX9" secondAttribute="trailing" constant="-16" id="Erx-V8-eKz"/>
                             <constraint firstItem="J8P-FA-MmE" firstAttribute="top" secondItem="eXM-66-Obw" secondAttribute="bottom" constant="33" id="HXv-Uv-hEB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9dM-nA-LIz" secondAttribute="trailing" constant="128" id="MvD-fo-NAe"/>
+                            <constraint firstItem="Zjl-hw-VsH" firstAttribute="leading" secondItem="Bgz-Gg-twu" secondAttribute="leadingMargin" constant="59" id="RB2-69-lxK"/>
                             <constraint firstItem="9dM-nA-LIz" firstAttribute="top" secondItem="BeM-CN-sTA" secondAttribute="bottom" constant="6" id="Rcz-QP-nlt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eXM-66-Obw" secondAttribute="trailing" constant="59" id="S8y-gA-uwt"/>
+                            <constraint firstItem="J8P-FA-MmE" firstAttribute="top" secondItem="Zjl-hw-VsH" secondAttribute="bottom" constant="7" id="StB-Ay-OLZ"/>
                             <constraint firstItem="eXM-66-Obw" firstAttribute="top" secondItem="BeM-CN-sTA" secondAttribute="bottom" constant="166" id="Z2y-vR-vhB"/>
                             <constraint firstItem="9dM-nA-LIz" firstAttribute="leading" secondItem="Bgz-Gg-twu" secondAttribute="leadingMargin" constant="127" id="afu-Jw-a8Q"/>
+                            <constraint firstItem="Zjl-hw-VsH" firstAttribute="top" secondItem="eXM-66-Obw" secondAttribute="bottom" constant="8" id="aos-8l-Xjq"/>
                             <constraint firstItem="Ntl-Da-qmG" firstAttribute="top" secondItem="eXM-66-Obw" secondAttribute="bottom" constant="316" id="bIO-WK-MJX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TiN-tb-cKJ" secondAttribute="trailing" constant="90" id="bmr-Tm-xEn"/>
                             <constraint firstItem="TiN-tb-cKJ" firstAttribute="leading" secondItem="Bgz-Gg-twu" secondAttribute="leadingMargin" constant="96" id="ce8-9e-Bak"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zjl-hw-VsH" secondAttribute="trailing" constant="59" id="fFb-kO-5tC"/>
                             <constraint firstItem="J8P-FA-MmE" firstAttribute="leading" secondItem="Bgz-Gg-twu" secondAttribute="leadingMargin" constant="59" id="j75-qj-yhM"/>
                             <constraint firstItem="s4c-Ql-fX9" firstAttribute="leading" secondItem="Bgz-Gg-twu" secondAttribute="leadingMargin" constant="-16" id="jDR-Es-TLp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="J8P-FA-MmE" secondAttribute="trailing" constant="59" id="mLw-5q-Iks"/>
@@ -318,14 +331,17 @@
                     </view>
                     <connections>
                         <outlet property="emailAddressTextField" destination="dnt-TQ-VBL" id="UxS-Mv-LdA"/>
+                        <outlet property="errorLabel" destination="Zjl-hw-VsH" id="zbY-Xj-ejY"/>
                         <outlet property="fullNameTextField" destination="E8R-0q-Isl" id="eBW-Nf-ojD"/>
                         <outlet property="passwordTextField" destination="KS5-bn-hmZ" id="eSy-nl-pRf"/>
                         <outlet property="profileImageButton" destination="9dM-nA-LIz" id="Kue-XP-YVb"/>
                         <outlet property="signupButton" destination="J8P-FA-MmE" id="g72-vw-uPU"/>
                         <outlet property="usernameTextField" destination="nFD-uk-jXR" id="mYU-Ay-8Hg"/>
+                        <segue destination="gKl-3p-ko6" kind="unwind" identifier="unwindToHomeScreen" unwindAction="unwindFromSignUpWithSegue:" id="dBN-lm-25k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KzV-v3-b03" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gKl-3p-ko6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-2794" y="815"/>
         </scene>

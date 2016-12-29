@@ -7,18 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 class SignupController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RSKImageCropViewControllerDelegate{
     
-    @IBOutlet weak var emailAddressTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var fullNameTextField: UITextField!
+    @IBOutlet weak var emailAddressTextField: CustomTextField!
+    @IBOutlet weak var passwordTextField: CustomTextField!
+    @IBOutlet weak var usernameTextField: CustomTextField!
+    @IBOutlet weak var fullNameTextField: CustomTextField!
 
+    @IBOutlet weak var errorLabel: CustomLable!
 
     @IBOutlet weak var profileImageButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
-    
+ 
+    @IBAction func signupButtonWasPressed(_ sender: Any) {
+        guard let email = emailAddressTextField, let password = passwordTextField, let userName = usernameTextField, let fullName = fullNameTextField else{
+            return
+        }
+        let textFields = [email,password,userName,fullName]
+        
+        if validateEmptyFields(cutomTextFields: textFields) {
+            errorLabel.text = "All field are required"
+            errorLabel.flash()
+        }else{
+            handleRegister(email: email.text!, password: password.text!, userName: userName.text!, fullName: fullName.text!)
+        }
+        
+    }
 
 
     @IBAction func pickProfileImageButtonWasPressed(_ sender: Any) {
@@ -35,10 +51,65 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func configureAssets(){
+        errorLabel.alpha = 0
         signupButton.layer.cornerRadius = 20
         profileImageButton.layer.masksToBounds = false
     }
     
+    func validateEmptyFields(cutomTextFields : [CustomTextField]) -> Bool{
+        var emptyFieldsExist : Bool = false
+        
+        for item in cutomTextFields {
+            if item.text?.isEmpty ?? false{
+                item.Jitter()
+                emptyFieldsExist = true
+            }
+        }
+        return emptyFieldsExist
+    }
+    
+    func handleRegister(email : String, password: String, userName : String, fullName : String){
+        
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user : FIRUser?, error : Error?) in
+            if (error != nil){
+                self.errorLabel.text = error?.localizedDescription
+                self.errorLabel.flash()
+                return
+            }
+            
+            guard let uid = user?.uid else {
+                return
+            }
+            
+            //Successfully authenticated new user, Now lets upload the new user to the DataBase
+            
+            let imageName = NSUUID().uuidString
+            let storageRef = FIRStorage.storage().reference().child(uid).child("Profile_Image").child("\(imageName).jpg")
+            
+            if let uploadData = UIImageJPEGRepresentation(self.profileImageButton.currentImage!, 0.8){
+                let metaData = FIRStorageMetadata()
+                metaData.contentType = "image/jpeg"
+                storageRef.put(uploadData, metadata: metaData, completion: { (metadata : FIRStorageMetadata?, error : Error?) in
+                    if error != nil {
+                        self.errorLabel.text = error?.localizedDescription
+                        self.errorLabel.flash()
+                        return
+                    }
+                    
+                    if let profileImageURL = metadata?.downloadURL()?.absoluteURL {
+                        let userProfile = Profile(uid: uid, Name: fullName, profileimage: profileImageURL.absoluteString)
+                        let newUserRef = FIRDatabase.database().reference().child("Users").child(uid)
+                        newUserRef.setValue(userProfile.toAnyObject())
+                        self.performSegue(withIdentifier: "unwindToHomeScreen", sender: self)
+                    }
+                    
+                })
+            }
+            
+        })
+        
+        
+    }
     
     func handleProfileImagePick(){
         let imagePickerController = UIImagePickerController()
@@ -66,7 +137,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     
-//Delegate methods of UIImagePickerController
+//Delegate methods of UIImagePickerController For picking profile image
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -81,7 +152,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         picker.dismiss(animated: true, completion: nil)
     }
     
-//Delegate methods of theRSKImageCropViewController
+//Delegate methods of theRSKImageCropViewController ffor picking profile image
     
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         self.profileImageButton.setImage(croppedImage, for: .normal)
@@ -89,7 +160,6 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         self.profileImageButton.layer.masksToBounds = true
         controller.dismiss(animated: true, completion: nil)
     }
-    
     func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
         controller.dismiss(animated: true, completion: nil)
     }

@@ -9,10 +9,6 @@
 import UIKit
 import Firebase
 
-class CustomTextField: UITextField,Jitterable,Flashable {}
-class CustomLable: UILabel,Jitterable,Flashable {}
-
-
 class LoginController: UIViewController {
     
     
@@ -30,7 +26,7 @@ class LoginController: UIViewController {
         }else{
             FIRAuth.auth()?.signIn(withEmail: mailTextField.text!, password: passwordTextField.text!, completion: { (user : FIRUser?, error :Error?) in
                 if (error != nil){
-                    self.loginErrorHandle(error: "Wrong E-mail or Password")
+                    self.loginErrorHandle(error: "Wrong Email or Password")
                 }else{
                     UIApplication.shared.statusBarStyle = .default
                     self.dismiss(animated: true, completion: nil)

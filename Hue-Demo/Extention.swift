@@ -11,3 +11,6 @@ import UIKit
 class Extention: NSObject {
 
 }
+
+class CustomTextField: UITextField,Jitterable,Flashable {}
+class CustomLable: UILabel,Jitterable,Flashable {}
