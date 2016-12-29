@@ -97,10 +97,10 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                     }
                     
                     if let profileImageURL = metadata?.downloadURL()?.absoluteURL {
-                        let userProfile = Profile(uid: uid, Name: fullName, profileimage: profileImageURL.absoluteString)
-                        let newUserRef = FIRDatabase.database().reference().child("Users").child(uid)
+                        let userProfile = Profile(Name: fullName, profileimage: profileImageURL.absoluteString)
+                        let newUserRef = FIRDatabase.database().reference().child(uid).child("User_Profile")
                         newUserRef.setValue(userProfile.toAnyObject())
-                        self.performSegue(withIdentifier: "unwindToHomeScreen", sender: self)
+                        self.performSegue(withIdentifier: "unwindFromSignup", sender: self)
                     }
                     
                 })

@@ -66,6 +66,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func unwindFromSignUp(segue : UIStoryboardSegue){
     }
     
+    @IBAction func unwindFromAddImage(segue : UIStoryboardSegue){
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }

@@ -10,12 +10,31 @@ import UIKit
 
 class Image : NSObject {
 
-    var imageData : String?
+    var imageURL : String?
     var imageTitle : String?
-    var numOfViews : NSNumber?
+    var numOfLikes : NSNumber = 0
     var uploadDate : NSDate?
     
-    var OwnerProfile : Profile?
-    var comments : [Comment]?
+    var OwnerUID : String?
+    var comments : [Comment] = []
+    
+    
+    init(url : String, title : String, date : NSDate, owner : String) {
+        imageURL = url
+        imageTitle = title
+        uploadDate = date
+        OwnerUID = owner
+    }
+    
+    func toAnyObject() -> AnyObject{
+        let toAnyObject : [String : AnyObject] = ["Image_URL" : imageURL as AnyObject,
+                                                  "Image_title" : imageTitle as AnyObject,
+                                                  "num_Of_likes" : numOfLikes as AnyObject,
+                                                  "Upload_Date" : uploadDate?.description as AnyObject,
+                                                  "OwnerUID" : OwnerUID as AnyObject,
+                                                  "Image_comments" : comments as AnyObject]
+        
+        return toAnyObject as AnyObject
+    }
     
 }

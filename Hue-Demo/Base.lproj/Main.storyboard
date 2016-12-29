@@ -337,7 +337,7 @@
                         <outlet property="profileImageButton" destination="9dM-nA-LIz" id="Kue-XP-YVb"/>
                         <outlet property="signupButton" destination="J8P-FA-MmE" id="g72-vw-uPU"/>
                         <outlet property="usernameTextField" destination="nFD-uk-jXR" id="mYU-Ay-8Hg"/>
-                        <segue destination="gKl-3p-ko6" kind="unwind" identifier="unwindToHomeScreen" unwindAction="unwindFromSignUpWithSegue:" id="dBN-lm-25k"/>
+                        <segue destination="gKl-3p-ko6" kind="unwind" identifier="unwindFromSignup" unwindAction="unwindFromSignUpWithSegue:" id="dBN-lm-25k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KzV-v3-b03" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -493,10 +493,10 @@
             </objects>
             <point key="canvasLocation" x="-2333.5999999999999" y="-1100.5997001499252"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Image View Controller-->
         <scene sceneID="jp4-Lw-6gS">
             <objects>
-                <viewController id="QBu-uf-9yJ" sceneMemberID="viewController">
+                <viewController id="QBu-uf-9yJ" customClass="AddImageViewController" customModule="Hue" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uAv-qs-0x8"/>
                         <viewControllerLayoutGuide type="bottom" id="UQB-bb-n18"/>
@@ -512,8 +512,12 @@
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="Photo-F"/>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
+                    <connections>
+                        <segue destination="Ky9-0j-PUn" kind="unwind" identifier="unwindFromAddImage" unwindAction="unwindFromAddImageWithSegue:" id="5lz-ew-ifA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uIc-sk-7lX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ky9-0j-PUn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1332" y="53"/>
         </scene>

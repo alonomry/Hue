@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50918C75773B43F232C89AEE2C0C87F9"
+               BlueprintIdentifier = "F8DA3E34BA20B7F26E885759A9E1F2DF"
                BuildableName = "Pods_Hue.framework"
                BlueprintName = "Pods-Hue"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50918C75773B43F232C89AEE2C0C87F9"
+            BlueprintIdentifier = "F8DA3E34BA20B7F26E885759A9E1F2DF"
             BuildableName = "Pods_Hue.framework"
             BlueprintName = "Pods-Hue"
             ReferencedContainer = "container:Pods.xcodeproj">

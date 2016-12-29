@@ -11,5 +11,6 @@ target 'Hue' do
     pod 'Firebase/Database'
     pod 'Firebase/Storage'
     pod 'RSKImageCropper'
+    pod 'Fusuma'
 
 end
