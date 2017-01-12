@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  SearchController.swift
 //  Hue-Demo
 //
 //  Created by Omry Dabush on 23/12/2016.
@@ -8,11 +8,13 @@
 
 import UIKit
 
-class SearchCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
     
     @IBOutlet weak var searchNavBar: UINavigationItem!
     @IBOutlet weak var searchCollectionView: UICollectionView!
+    
+    
   //  var images:[Picture]?
     var index:NSIndexPath?
  

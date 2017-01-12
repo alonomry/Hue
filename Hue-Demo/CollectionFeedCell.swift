@@ -1,5 +1,5 @@
 //
-//  FeedCell.swift
+//  CollectionFeedCell.swift
 //  Hue-Demo
 //
 //  Created by Omry Dabush on 24/12/2016.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedCell: UICollectionViewCell {
+class CollectionFeedCell: UICollectionViewCell {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileName: UILabel!

@@ -74,9 +74,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let nib = UINib(nibName: "feedCell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "feedCell")
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
+        let nib = UINib(nibName: "collectionFeedCell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "collectionFeedCell")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionFeedCell", for: indexPath) as! CollectionFeedCell
         cell.profileImage.layer.cornerRadius = 22
         cell.profileImage.layer.masksToBounds = true
         return cell
