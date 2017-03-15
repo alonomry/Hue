@@ -17,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        //Connecting to FireBase
         FIRApp.configure()
+        //Changing the Bat tint Color
         UITabBar.appearance().tintColor = UIColor.black
         
         return true

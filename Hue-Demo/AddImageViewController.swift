@@ -13,8 +13,6 @@ import Fusuma
 
 class AddImageViewController: UIViewController, FusumaDelegate {
     
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,9 +27,10 @@ class AddImageViewController: UIViewController, FusumaDelegate {
     }
     func fusumaImageSelected(_ image: UIImage, source: FusumaMode) {
         
-        guard let userUID = FIRAuth.auth()?.currentUser?.uid else {
+        guard let userUID : String = FIRAuth.auth()?.currentUser?.uid else {
             return
         }
+        
         let metaData = FIRStorageMetadata()
         let imageName = NSUUID().uuidString
         let userUploadRef = FIRStorage.storage().reference().child(userUID).child("Uploads").child("\(imageName).jpeg")
@@ -46,7 +45,7 @@ class AddImageViewController: UIViewController, FusumaDelegate {
                 if let imageDownloadURL = metadata?.downloadURL()?.absoluteString{
                     let uploadTime = NSDate()
                     let upload = Image(url: imageDownloadURL, title: "", date: uploadTime , owner: userUID)
-                    let userProfileRef = FIRDatabase.database().reference().child(userUID).child("Posts")
+                    let userProfileRef = FIRDatabase.database().reference().child("Posts").child(imageName)
                     userProfileRef.setValue(upload.toAnyObject())
                     
                 }
@@ -67,10 +66,11 @@ class AddImageViewController: UIViewController, FusumaDelegate {
 
     
     func fusumaDismissedWithImage(_ image: UIImage, source: FusumaMode) {
-        
         print("somthing")
+//        self.dismiss(animated: true, completion: nil)
     }
     
     func fusumaClosed() {
-            self.performSegue(withIdentifier: "unwindFromAddImage", sender: self)}
+        self.performSegue(withIdentifier: "unwindFromAddImage", sender: self)
+    }
 }

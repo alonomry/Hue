@@ -20,6 +20,31 @@ class CollectionFeedCell: UICollectionViewCell {
     
     @IBOutlet weak var commentButton: UIButton!
     
+    @IBAction func test(_ sender: Any) {
+        
+        //Creating a file into the FileManager Documents directory
+        
+        let fileManager = FileManager.default
+        
+            
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        print(documentsDirectory[0])
+        
+        let filePath = documentsDirectory[0].appendingPathComponent("uid")
+        print(filePath)
+
+        
+        do {
+            try fileManager.createDirectory(at: filePath, withIntermediateDirectories: false, attributes: nil)
+            print("Success!")
+        } catch let error {
+            print(error)
+        }
+
+        //EOF
+        
+    }
+    
     var image : Image?{
         didSet{
             setupProfile()

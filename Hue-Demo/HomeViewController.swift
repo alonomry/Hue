@@ -25,29 +25,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         setupCollectionView()
     }
     
+    func verifyLoginUser(){
+        if Model.sharedInstance.validateCurrentUser() == false {
+            let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
+            self.present(loginVC!, animated: true, completion: nil)
+        }else {
+            //already Loggedin
+        }
+    }
     
     func handleLogout(){
-        do{
-            try FIRAuth.auth()?.signOut()
-        }catch let logoutError{
-            print(logoutError)
+        if (Model.sharedInstance.handleLogout()){
+            let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
+            self.present(loginVC!, animated: true, completion: nil)
         }
-        let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
-        self.present(loginVC!, animated: true, completion: nil)
         
     }
-
-
-    func verifyLoginUser(){
-        let user = FIRAuth.auth()?.currentUser
-        if (user?.uid == nil){
-            perform(#selector(handleLogout), with: nil, afterDelay: 0)
-        }else{
-            //already loggedin
-        }
-    }
-    
-
 
     func setupNavBar(){
         let logo = UIImage(named: "logo")

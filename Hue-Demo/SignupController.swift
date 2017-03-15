@@ -97,8 +97,8 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                     }
                     
                     if let profileImageURL = metadata?.downloadURL()?.absoluteURL {
-                        let userProfile = Profile(Name: fullName, profileimage: profileImageURL.absoluteString)
-                        let newUserRef = FIRDatabase.database().reference().child(uid).child("User_Profile")
+                        let userProfile = Profile(username : userName, Name: fullName, profileimage: profileImageURL.absoluteString, discription : "bla bla")
+                        let newUserRef = FIRDatabase.database().reference().child("Users").child(uid)
                         newUserRef.setValue(userProfile.toAnyObject())
                         self.performSegue(withIdentifier: "unwindFromSignup", sender: self)
                     }

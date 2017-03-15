@@ -30,7 +30,7 @@ class TableFeedCell: UITableViewCell {
 class TableFeedHeader: UITableViewCell {
     
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var profileName: NSLayoutConstraint!
+    @IBOutlet weak var profileUserName: UILabel!
     @IBOutlet weak var moreButton: UIButton!
     
     override func awakeFromNib() {

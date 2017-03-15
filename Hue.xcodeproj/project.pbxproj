@@ -18,6 +18,8 @@
 		CD1386D51E0DDD88006FF919 /* CollectionFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386D41E0DDD88006FF919 /* CollectionFeedCell.swift */; };
 		CD476D031E15318400EA42F5 /* AddImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD476D021E15318400EA42F5 /* AddImageViewController.swift */; };
 		CD653F401E2815850042C047 /* tableFeedHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD653F3F1E2815850042C047 /* tableFeedHeader.xib */; };
+		CD72444A1E3BBA9D007AC332 /* ModelFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */; };
+		CD884DD81E44E8E60018349D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD884DD71E44E8E60018349D /* Model.swift */; };
 		CDA0B8CE1E117321005D3CB8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8CD1E117321005D3CB8 /* LoginController.swift */; };
 		CDA0B8D01E117353005D3CB8 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8CF1E117353005D3CB8 /* SignupController.swift */; };
 		CDA0B8D21E1180E9005D3CB8 /* Jitterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */; };
@@ -54,6 +56,8 @@
 		CD1386D41E0DDD88006FF919 /* CollectionFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionFeedCell.swift; sourceTree = "<group>"; };
 		CD476D021E15318400EA42F5 /* AddImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageViewController.swift; sourceTree = "<group>"; };
 		CD653F3F1E2815850042C047 /* tableFeedHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableFeedHeader.xib; sourceTree = "<group>"; };
+		CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFirebase.swift; sourceTree = "<group>"; };
+		CD884DD71E44E8E60018349D /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		CDA0B8CD1E117321005D3CB8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		CDA0B8CF1E117353005D3CB8 /* SignupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jitterable.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 		CDC120A51E0E77470019AA39 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CD884DD71E44E8E60018349D /* Model.swift */,
+				CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */,
 				CDC120A61E0E788F0019AA39 /* Image.swift */,
 				CDC120A81E0E79C80019AA39 /* Profile.swift */,
 				CDC120AA1E0E7B370019AA39 /* Comment.swift */,
@@ -342,6 +348,7 @@
 			files = (
 				CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */,
 				CD476D031E15318400EA42F5 /* AddImageViewController.swift in Sources */,
+				CD72444A1E3BBA9D007AC332 /* ModelFirebase.swift in Sources */,
 				CD1386D51E0DDD88006FF919 /* CollectionFeedCell.swift in Sources */,
 				CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */,
 				CDA0B8D01E117353005D3CB8 /* SignupController.swift in Sources */,
@@ -354,6 +361,7 @@
 				DF659C341E0EDD7D00E3ACBD /* CommentsCell.swift in Sources */,
 				CDF1B4471E26BB48007DFCBA /* ExploreController.swift in Sources */,
 				CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */,
+				CD884DD81E44E8E60018349D /* Model.swift in Sources */,
 				CDA342DC1E1194CA0046E9EA /* SearchController.swift in Sources */,
 				CDA0B8D21E1180E9005D3CB8 /* Jitterable.swift in Sources */,
 				CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */,
@@ -480,6 +488,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";
@@ -496,6 +505,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C199128B021472438A88919E /* Pods-Hue.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 79LH43EPL7;
 				INFOPLIST_FILE = "Hue-Demo/Info.plist";

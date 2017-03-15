@@ -11,24 +11,41 @@ import UIKit
 class Profile: NSObject {
 
     var profileName : String?
-    var profileImage : String?
-    var profileDescription : String = ""
-    var Followers : [String] = [""]
-    var Following : [String] = [""]
+    var userName :  String?
+    var profileImageURL : String?
+    var profileDiscription : String?
+    var userPosts : [String]? = []
+    var followers : [String]? = []
+    var following : [String]? = []
     
     
     
-    init(Name : String, profileimage : String) {
+    init(username : String, Name : String, profileimage : String, discription : String) {
+        userName = username
         profileName = Name
-        profileImage = profileimage
+        profileImageURL = profileimage
+        profileDiscription = discription
+    }
+    
+    init(json : Dictionary<String , Any>){
+        profileName = json["Profile_Name"] as? String
+        userName = json["User_Name"] as? String
+        profileImageURL = json["Profile_Image"] as? String
+        profileDiscription = json["Discription"] as? String
+        userPosts = json["User_Posts"] as? [String]
+        followers = json["Followers"] as? [String]
+        following = json["Following"] as? [String]
+        
     }
     
     func toAnyObject() -> AnyObject {
-        let toAnyObject : [String : AnyObject] = ["Full_Name" : profileName as AnyObject,
-                                                  "Profile_Image" : profileImage as AnyObject,
-                                                  "Description" : profileDescription as AnyObject,
-                                                  "num_Of_Followers" : Followers as AnyObject,
-                                                  "num_Of_Following" : Following as AnyObject,
+        let toAnyObject : [String : AnyObject] = ["Profile_Name" : profileName as AnyObject,
+                                                  "User_Name" : userName as AnyObject,
+                                                  "Profile_Image" : profileImageURL as AnyObject,
+                                                  "Discription" : profileDiscription as AnyObject,
+                                                  "User_Posts" : userPosts as AnyObject,
+                                                  "Followers" : followers as AnyObject,
+                                                  "Following" : following as AnyObject,
                                                   ]
         return toAnyObject as AnyObject
     }
