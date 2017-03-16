@@ -14,8 +14,9 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
     let feedXib = UINib(nibName: "tableFeedCell", bundle: nil)
     let uid = FIRAuth.auth()?.currentUser?.uid
     let DBref =  FIRDatabase.database().reference()
-    var imageFeed =  [Image]()
+    var imageFeed =  [String : Image]()
     var profileFeed = [String : Profile]()
+    var images : Array<Image>?
     
     
     
@@ -25,7 +26,8 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         super.viewDidLoad()
         mainTableView.register(feedXib, forCellReuseIdentifier: "tableFeedCell")
         mainTableView.register(feedXib, forHeaderFooterViewReuseIdentifier: "tableFeedHeader")
-        fetchFeed()
+        images = Array(imageFeed.values)
+        
         configurAssets()
         
     }
@@ -35,45 +37,46 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         mainTableView.dataSource = self
     }
     
-    func fetchFeed(){
-        
-        if let user = FIRAuth.auth()?.currentUser {
-            print(user)
-        }
-        
-        DBref.child("Posts").observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-            
-                let feedImage = Image(json: dictionary)
-                
-                if let ownerUID = dictionary["OwnerUID"] as? String {
-                    self.getProfileData(uid: ownerUID, callback: { (profile) in
-                        self.profileFeed[ownerUID] = profile
-                    })
-                }
-                
-                self.imageFeed.append(feedImage)
-                
-                //reloading table view data asyncronicly to prevent crash
-                DispatchQueue.main.async {
-
-                    self.mainTableView.reloadData()
-                    
-                }
-            }
-        })
-    }
+//    func fetchFeed(){
+//        
+//        if let user = FIRAuth.auth()?.currentUser {
+//            print(user)
+//        }
+//        
+//        DBref.child("Posts").observe(.childAdded, with: { (snapshot) in
+//            let imageID = snapshot.key
+//            print(imageID)
+//            if let dictionary = snapshot.value as? [String : Any]{
+////                print(dictionary)
+//                let feedImage = Image(json: dictionary)
+//                if let ownerUID = dictionary["OwnerUID"] as? String {
+//                    self.getProfileData(uid: ownerUID, callback: { (profile) in
+//                        self.profileFeed[ownerUID] = profile
+//                    })
+//                }
+//                
+//                self.imageFeed.append(feedImage)
+//                
+//                //reloading table view data asyncronicly to prevent crash
+//                DispatchQueue.main.async {
+//                    
+//                    self.mainTableView.reloadData()
+//                    
+//                }
+//            }
+//        })
+//    }
     
     
-    func getProfileData(uid : String , callback: @escaping (Profile) -> Void){
-        DBref.child("Users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let userProfile = snapshot.value as? [String : Any] {
-                let feedProfile = Profile(json: userProfile)
-                callback(feedProfile)
-            }
-        })
-        
-    }
+//    func getProfileData(uid : String , callback: @escaping (Profile) -> Void){
+//        DBref.child("Users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let userProfile = snapshot.value as? [String : Any] {
+//                let feedProfile = Profile(json: userProfile)
+//                callback(feedProfile)
+//            }
+//        })
+//        
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -98,10 +101,10 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         cell.uploadedImage.contentMode = .scaleAspectFill
         
-        let imageData = imageFeed[indexPath.section]
+        let imageData = images?[indexPath.section]
         
         
-        if let imageFeedURL = imageData.imageURL{
+        if let imageFeedURL = imageData?.imageURL{
             cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageFeedURL)
         }
         
@@ -116,9 +119,9 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         header.profileImage.layer.cornerRadius = 22
         header.profileImage.layer.masksToBounds = true
         
-        if let profileUID = imageFeed[section].ownerUID {
+        if let profileUID = images?[section].ownerUID {
             if let profileData = profileFeed[profileUID] {
-                header.profileUserName.text = profileData.userName
+                header.profileUserName.text = (profileData).userName
                 if let profileImagURL = profileData.profileImageURL{
                     header.profileImage.loadImageUsingCacheWithUrlString(urlString: profileImagURL)
                 }

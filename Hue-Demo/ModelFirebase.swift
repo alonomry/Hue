@@ -11,6 +11,10 @@ import Firebase
 
 class ModelFirebase{
     
+    init() {
+        //Connecting to FireBase
+        FIRApp.configure()
+    }
 
     func getUser()->FIRUser?{
         if let user = FIRAuth.auth()?.currentUser{
@@ -27,6 +31,10 @@ class ModelFirebase{
             return error as Error
         }
         return nil
+    }
+    
+    func getDataBaseReference()->FIRDatabaseReference{
+        return FIRDatabase.database().reference()
     }
     
 }
