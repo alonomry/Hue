@@ -15,12 +15,11 @@
             <rect key="frame" x="0.0" y="0.0" width="449" height="62"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="as6-K0-gjt" id="12x-aj-Hzg">
-                <rect key="frame" x="0.0" y="0.0" width="449" height="61"/>
+                <rect key="frame" x="0.0" y="0.0" width="449" height="61.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qrM-DL-3xI">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyUserProfile" translatesAutoresizingMaskIntoConstraints="NO" id="qrM-DL-3xI">
                         <rect key="frame" x="8" y="8" width="44" height="44"/>
-                        <color key="backgroundColor" red="1" green="0.028078071959999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="6we-Wi-wbq"/>
                             <constraint firstAttribute="width" constant="44" id="epD-8O-FYj"/>
@@ -67,6 +66,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="EmptyUserProfile" width="55" height="55"/>
         <image name="More" width="20" height="5"/>
     </resources>
 </document>

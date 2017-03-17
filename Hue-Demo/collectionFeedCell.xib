@@ -18,9 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="449" height="472"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rXB-aQ-AaO">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmptyUserProfile" translatesAutoresizingMaskIntoConstraints="NO" id="rXB-aQ-AaO">
                         <rect key="frame" x="8" y="8" width="44" height="44"/>
-                        <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="sfK-V0-eSc"/>
                             <constraint firstAttribute="height" constant="44" id="ybB-9A-aEB"/>
@@ -43,9 +42,8 @@
                             <constraint firstAttribute="height" constant="1" id="4JS-BV-lDh"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uWP-Mg-9Ag">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="uWP-Mg-9Ag">
                         <rect key="frame" x="0.0" y="63" width="449" height="212"/>
-                        <color key="backgroundColor" red="0.02650833651655966" green="0.18773715386920534" blue="0.67142360592714234" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdz-7H-OCt">
                         <rect key="frame" x="10" y="322" width="429" height="1"/>
@@ -183,9 +181,11 @@
     </objects>
     <resources>
         <image name="Comment" width="25" height="23"/>
+        <image name="EmptyUserProfile" width="55" height="55"/>
         <image name="Love" width="25" height="25"/>
         <image name="Love-F" width="25" height="25"/>
         <image name="More" width="20" height="5"/>
         <image name="SendMessage" width="25" height="25"/>
+        <image name="loading" width="612" height="610"/>
     </resources>
 </document>

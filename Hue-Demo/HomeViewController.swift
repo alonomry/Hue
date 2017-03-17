@@ -60,6 +60,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func unwindFromAddImage(segue : UIStoryboardSegue){
+        self.mainFeedCollectioView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

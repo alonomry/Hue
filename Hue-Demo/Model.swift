@@ -19,18 +19,23 @@ class Model{
     private init(){
         modelFirebase = ModelFirebase()
         DBref = modelFirebase?.getDataBaseReference()
+        modelSQL = ModelSQL()
         
-        self.fetchFeed()
-        
-        //Posting a notification that the fetch has been completed
-//        NotificationCenter.default.post(name: .fetchNotification , object: nil)
+        self.fetchFeed { (success) in
+            //Posting a notification that the fetch has been completed
+            if (success){
+                NotificationCenter.default.post(name: .fetchNotification , object: nil)
+            }
+        }
+
     }
-    
+
 
     var imageFeed =  [String : Image]()
     var profileFeed = [String : Profile]()
     var DBref : FIRDatabaseReference?
     private var modelFirebase: ModelFirebase?
+    private var modelSQL : ModelSQL?
     
     func validateCurrentUser()->Bool{
         if modelFirebase?.getUser() == nil {
@@ -50,36 +55,64 @@ class Model{
         
     }
     
-    private func fetchFeed(){
+    private func fetchFeed(success: @escaping (Bool) ->()){
         
-        if let user = modelFirebase?.getUser(){
-            print(user)
+        var count : UInt = 0
+        var firstFetch = true
+        
+        //checking if there is a usere connected
+        guard let _ = modelFirebase?.getUser() else {
+            return
         }
         
-        DBref?.child("Posts").observe(.childAdded, with: { (snapshot) in
-    
-            let imageID = snapshot.key
+        self.getImageData { (imageData, imageUID, ownerID) in
+            self.imageFeed[imageUID] = imageData
+            self.getProfileData(uid: ownerID, success: { (profileData, numOfUsers) in
+                if (self.profileFeed[ownerID] == nil){
+                    self.profileFeed[ownerID] = profileData
+                    profileData.addProfileToLocalDb(database: self.modelSQL?.database)
+                    count = count + 1
+                    if (count == numOfUsers){
+                        print("DONE FETCHING")
+                        firstFetch = false
+                        success(true)
+                    }
+                }
+                if (!firstFetch){
+                    success(true)
+                }
+            })
+        
+        }
 
+    }
+    
+    
+    func getImageData(success : @escaping (Image, String, String) -> Void) {
+        DBref?.child("Posts").queryLimited(toFirst: 30).observe(.childAdded, with: { (snapshot) in
+            
+            let imageID = snapshot.key
             if let dictionary = snapshot.value as? [String : Any]{
                 let feedImage = Image(json: dictionary)
                 if let ownerUID = dictionary["OwnerUID"] as? String {
-                    self.getProfileData(uid: ownerUID, callback: { (profile) in
-                        self.profileFeed[ownerUID] = profile
-                    })
+                    success(feedImage, imageID, ownerUID)
                 }
-                
-                self.imageFeed[imageID] = feedImage
 
             }
         })
-        
     }
 
-    func getProfileData(uid : String , callback: @escaping (Profile) -> Void){
-        DBref?.child("Users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let userProfile = snapshot.value as? [String : Any] {
-                let feedProfile = Profile(json: userProfile)
-                callback(feedProfile)
+    func getProfileData(uid : String , success: @escaping (Profile, UInt) -> Void){
+        DBref?.child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let users = snapshot.value as? [String : Any] {
+                if let dictionary = users[uid] as? [String : Any] {
+                    let feedProfile = Profile(json: dictionary)
+                    
+                    //Sending the profile obj, num of childeren and their key value
+                    success(feedProfile, snapshot.childrenCount)
+                    
+                }
             }
         })
         
@@ -93,4 +126,10 @@ class Model{
         return profileFeed
     }
     
+}
+
+extension NSDate {
+    func dateToSQL() -> Double {
+        return self.timeIntervalSince1970 * 1000
+    }
 }

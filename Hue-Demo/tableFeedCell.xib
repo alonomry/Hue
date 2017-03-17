@@ -16,15 +16,14 @@
             <rect key="frame" x="0.0" y="0.0" width="449" height="418"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZQu-Cl-XPR" id="RUs-91-ORi">
-                <rect key="frame" x="0.0" y="0.0" width="449" height="418"/>
+                <rect key="frame" x="0.0" y="0.0" width="449" height="417.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="daJ-5Y-Q4z">
-                        <rect key="frame" x="0.0" y="0.0" width="449" height="217"/>
-                        <color key="backgroundColor" red="0.40000000600000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="daJ-5Y-Q4z">
+                        <rect key="frame" x="0.0" y="0.0" width="449" height="216"/>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="haI-CD-b4C">
-                        <rect key="frame" x="8" y="233" width="97" height="23"/>
+                        <rect key="frame" x="8" y="232" width="97" height="23"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0yj-6d-dRr">
                                 <rect key="frame" x="0.0" y="0.0" width="23" height="23"/>
@@ -53,7 +52,7 @@
                         </subviews>
                     </stackView>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="56X-Sb-kBt">
-                        <rect key="frame" x="16" y="284" width="88" height="12"/>
+                        <rect key="frame" x="16" y="283" width="88" height="12"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Love-F" translatesAutoresizingMaskIntoConstraints="NO" id="Qkg-Qs-lAm">
                                 <rect key="frame" x="0.0" y="0.0" width="12" height="12"/>
@@ -77,14 +76,14 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ji-gl-YH9">
-                        <rect key="frame" x="10" y="268" width="429" height="1"/>
+                        <rect key="frame" x="10" y="267" width="429" height="1"/>
                         <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="5d2-ur-vta"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Comment content..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oE9-Fa-dFk">
-                        <rect key="frame" x="16" y="311" width="417" height="45"/>
+                        <rect key="frame" x="16" y="310" width="417" height="45"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="45" id="EKn-Gv-4bm"/>
                         </constraints>
@@ -93,7 +92,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Elapsed Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgZ-bp-qYj">
-                        <rect key="frame" x="16" y="371" width="74" height="15"/>
+                        <rect key="frame" x="16" y="370" width="74" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="tQf-hQ-45p"/>
                         </constraints>
@@ -136,5 +135,6 @@
         <image name="Love" width="25" height="25"/>
         <image name="Love-F" width="25" height="25"/>
         <image name="SendMessage" width="25" height="25"/>
+        <image name="loading" width="577" height="577"/>
     </resources>
 </document>

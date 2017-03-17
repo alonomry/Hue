@@ -97,7 +97,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
                     }
                     
                     if let profileImageURL = metadata?.downloadURL()?.absoluteURL {
-                        let userProfile = Profile(username : userName, Name: fullName, profileimage: profileImageURL.absoluteString, discription : "bla bla")
+                        let userProfile = Profile(profileuid : uid, username : userName, Name: fullName, profileimage: profileImageURL.absoluteString, discription : "bla bla")
                         let newUserRef = FIRDatabase.database().reference().child("Users").child(uid)
                         newUserRef.setValue(userProfile.toAnyObject())
                         self.performSegue(withIdentifier: "unwindFromSignup", sender: self)
@@ -152,7 +152,7 @@ class SignupController: UIViewController, UIImagePickerControllerDelegate, UINav
         picker.dismiss(animated: true, completion: nil)
     }
     
-//Delegate methods of theRSKImageCropViewController ffor picking profile image
+//Delegate methods of theRSKImageCropViewController for picking profile image
     
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         self.profileImageButton.setImage(croppedImage, for: .normal)

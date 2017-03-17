@@ -13,6 +13,7 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     
     @IBOutlet weak var searchNavBar: UINavigationItem!
     @IBOutlet weak var searchCollectionView: UICollectionView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     
     
@@ -30,32 +31,22 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        loadingIndicator.startAnimating()
         setupCollectionView()
-        
-        //Getting the Data from Model
-        imagesObject = Model.sharedInstance.getImageDataAfterFetch()
-        profileObject = Model.sharedInstance.getProfileDataAfterFetch()
-        
-        //Converting the image data to Array so we could iterate
-        images = Array(imagesObject.values)
+    
+
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-    
-//        if (imagesObject.count = 0 || profileObject.cout == 0){
-//            imagesObject = Model.sharedInstance.getImageDataAfterFetch()
-//            profileObject = Model.sharedInstance.getProfileDataAfterFetch()
-//            searchCollectionView.reloadData()
-//        }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillAppear(animated)
+//        NotificationCenter.default.addObserver(self, selector: #selector(SearchController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
     
     func setupCollectionView(){
@@ -72,24 +63,31 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func loadDataAfterFetch (_ notification : Notification){
+
+        //Getting the Data from Model
         imagesObject = Model.sharedInstance.getImageDataAfterFetch()
         profileObject = Model.sharedInstance.getProfileDataAfterFetch()
-        searchCollectionView.reloadData()
-    }
+        
+        //Converting the image data to Array so we could iterate
+        images = Array(imagesObject.values)
+        
     
-    //        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //            if(segue.identifier == "ExploreVC"){
-    //                let explorevc = segue.destination as! ExploreController
-    //                explorevc.images = self.images
-    //                explorevc.index = self.searchCollectionView.indexPath(for: sender as! UICollectionViewCell) as NSIndexPath?
-    //                           }
-    //        }
+        if (searchCollectionView != nil && loadingIndicator != nil){
+   
+            self.loadingIndicator.stopAnimating()
+            searchCollectionView.reloadData()
+            
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if let exploreVC = storyboard?.instantiateViewController(withIdentifier: "ExploreController") as? ExploreController {
+            
             exploreVC.imageFeed = imagesObject
             exploreVC.profileFeed = profileObject
+            exploreVC.images = images
+            exploreVC.scrollToIndex = indexPath.row
             self.navigationController?.show(exploreVC, sender: self)
         }
         
@@ -112,6 +110,8 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         return cell
     }
     
+
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.width)/3-1, height: (view.frame.width)/3-1)
     }
@@ -122,11 +122,6 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        super.viewWillAppear(animated)
     }
     
     

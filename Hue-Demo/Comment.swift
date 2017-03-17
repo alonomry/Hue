@@ -10,8 +10,16 @@ import UIKit
 
 class Comment: NSObject {
     
+    var imageUID : String?
     var commentedProfileImage : String?
     var commentedProfileName : String?
     var comment : String?
 
+    init(imageuid : String, commprofileImage : String, commprofileName : String, comm : String) {
+        imageUID = imageuid
+        commentedProfileImage = commprofileImage
+        commentedProfileName = commprofileName
+        comment = comm
+    }
+    
 }

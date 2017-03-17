@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		13A0CDA520F0AA5E1B46A87A /* Pods_Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CC767D62DD982DD70B3340 /* Pods_Hue.framework */; };
+		CD093DAD1E7C1B6800C5FA01 /* CommentSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD093DA91E7C1B6800C5FA01 /* CommentSQL.swift */; };
+		CD093DAE1E7C1B6800C5FA01 /* ImageSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD093DAA1E7C1B6800C5FA01 /* ImageSQL.swift */; };
+		CD093DAF1E7C1B6800C5FA01 /* ModelSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD093DAB1E7C1B6800C5FA01 /* ModelSQL.swift */; };
+		CD093DB01E7C1B6800C5FA01 /* ProfileSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD093DAC1E7C1B6800C5FA01 /* ProfileSQL.swift */; };
 		CD1386B91E0D72BA006FF919 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386B81E0D72BA006FF919 /* AppDelegate.swift */; };
 		CD1386BB1E0D72BA006FF919 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */; };
 		CD1386C01E0D72BA006FF919 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1386BE1E0D72BA006FF919 /* Main.storyboard */; };
@@ -43,6 +47,10 @@
 /* Begin PBXFileReference section */
 		40CC767D62DD982DD70B3340 /* Pods_Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C199128B021472438A88919E /* Pods-Hue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hue/Pods-Hue.release.xcconfig"; sourceTree = "<group>"; };
+		CD093DA91E7C1B6800C5FA01 /* CommentSQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentSQL.swift; sourceTree = "<group>"; };
+		CD093DAA1E7C1B6800C5FA01 /* ImageSQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSQL.swift; sourceTree = "<group>"; };
+		CD093DAB1E7C1B6800C5FA01 /* ModelSQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSQL.swift; sourceTree = "<group>"; };
+		CD093DAC1E7C1B6800C5FA01 /* ProfileSQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSQL.swift; sourceTree = "<group>"; };
 		CD1386B51E0D72BA006FF919 /* Hue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1386B81E0D72BA006FF919 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD1386BA1E0D72BA006FF919 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -57,18 +65,18 @@
 		CD476D021E15318400EA42F5 /* AddImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageViewController.swift; sourceTree = "<group>"; };
 		CD653F3F1E2815850042C047 /* tableFeedHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableFeedHeader.xib; sourceTree = "<group>"; };
 		CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFirebase.swift; sourceTree = "<group>"; };
-		CD884DD71E44E8E60018349D /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		CD884DD71E44E8E60018349D /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Model.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CDA0B8CD1E117321005D3CB8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		CDA0B8CF1E117353005D3CB8 /* SignupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		CDA0B8D11E1180E9005D3CB8 /* Jitterable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jitterable.swift; sourceTree = "<group>"; };
 		CDA0B8D31E1180F6005D3CB8 /* Flashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashable.swift; sourceTree = "<group>"; };
 		CDA342DD1E119A040046E9EA /* Hue-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hue-Bridging-Header.h"; sourceTree = "<group>"; };
-		CDC120A61E0E788F0019AA39 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		CDC120A61E0E788F0019AA39 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Image.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CDC120A81E0E79C80019AA39 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		CDC120AA1E0E7B370019AA39 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		CDC120AD1E0E83D50019AA39 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		CDF1B4461E26BB48007DFCBA /* ExploreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
+		CDF1B4461E26BB48007DFCBA /* ExploreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ExploreController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CDF1B4481E26BCC9007DFCBA /* tableFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableFeedCell.xib; sourceTree = "<group>"; };
 		CDF1B44A1E26BE47007DFCBA /* TableFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableFeedCell.swift; sourceTree = "<group>"; };
 		DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
@@ -97,6 +105,17 @@
 				40CC767D62DD982DD70B3340 /* Pods_Hue.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD093DB11E7C1C5900C5FA01 /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				CD093DA91E7C1B6800C5FA01 /* CommentSQL.swift */,
+				CD093DAA1E7C1B6800C5FA01 /* ImageSQL.swift */,
+				CD093DAB1E7C1B6800C5FA01 /* ModelSQL.swift */,
+				CD093DAC1E7C1B6800C5FA01 /* ProfileSQL.swift */,
+			);
+			name = SQLite;
 			sourceTree = "<group>";
 		};
 		CD1386AC1E0D72BA006FF919 = {
@@ -186,6 +205,7 @@
 		CDC120A51E0E77470019AA39 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CD093DB11E7C1C5900C5FA01 /* SQLite */,
 				CD884DD71E44E8E60018349D /* Model.swift */,
 				CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */,
 				CDC120A61E0E788F0019AA39 /* Image.swift */,
@@ -348,13 +368,17 @@
 			files = (
 				CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */,
 				CD476D031E15318400EA42F5 /* AddImageViewController.swift in Sources */,
+				CD093DAE1E7C1B6800C5FA01 /* ImageSQL.swift in Sources */,
+				CD093DAF1E7C1B6800C5FA01 /* ModelSQL.swift in Sources */,
 				CD72444A1E3BBA9D007AC332 /* ModelFirebase.swift in Sources */,
+				CD093DAD1E7C1B6800C5FA01 /* CommentSQL.swift in Sources */,
 				CD1386D51E0DDD88006FF919 /* CollectionFeedCell.swift in Sources */,
 				CDC120A91E0E79C80019AA39 /* Profile.swift in Sources */,
 				CDA0B8D01E117353005D3CB8 /* SignupController.swift in Sources */,
 				CDF1B44B1E26BE47007DFCBA /* TableFeedCell.swift in Sources */,
 				CDA0B8D41E1180F6005D3CB8 /* Flashable.swift in Sources */,
 				CDC120A71E0E788F0019AA39 /* Image.swift in Sources */,
+				CD093DB01E7C1B6800C5FA01 /* ProfileSQL.swift in Sources */,
 				CDA0B8CE1E117321005D3CB8 /* LoginController.swift in Sources */,
 				DF659C361E0EDE2D00E3ACBD /* CommentsController.swift in Sources */,
 				DF659C2E1E0ECE2100E3ACBD /* SearchCell.swift in Sources */,

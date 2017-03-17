@@ -44,7 +44,7 @@ class AddImageViewController: UIViewController, FusumaDelegate {
                 
                 if let imageDownloadURL = metadata?.downloadURL()?.absoluteString{
                     let uploadTime = NSDate()
-                    let upload = Image(url: imageDownloadURL, title: "", date: uploadTime , owner: userUID)
+                    let upload = Image(imageUid : imageName ,url: imageDownloadURL, title: "", date: uploadTime , owner: userUID)
                     let userProfileRef = FIRDatabase.database().reference().child("Posts").child(imageName)
                     userProfileRef.setValue(upload.toAnyObject())
                     
@@ -66,7 +66,6 @@ class AddImageViewController: UIViewController, FusumaDelegate {
 
     
     func fusumaDismissedWithImage(_ image: UIImage, source: FusumaMode) {
-        print("somthing")
 //        self.dismiss(animated: true, completion: nil)
     }
     
