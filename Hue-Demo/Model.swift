@@ -15,7 +15,6 @@ class Model{
     //Using this Model as Singlton
     static let sharedInstance = Model()
     
-    
     private init(){
         modelFirebase = ModelFirebase()
         DBref = modelFirebase?.getDataBaseReference()
@@ -30,12 +29,18 @@ class Model{
 
     }
 
-
     var imageFeed =  [String : Image]()
     var profileFeed = [String : Profile]()
     var DBref : FIRDatabaseReference?
     private var modelFirebase: ModelFirebase?
     private var modelSQL : ModelSQL?
+    
+    func getCurrentUser() -> String? {
+        if let user = modelFirebase?.getUser() {
+             return user.uid
+        }
+        return nil
+    }
     
     func validateCurrentUser()->Bool{
         if modelFirebase?.getUser() == nil {
@@ -55,7 +60,7 @@ class Model{
         
     }
     
-    private func fetchFeed(success: @escaping (Bool) ->()){
+    func fetchFeed(success: @escaping (Bool) ->()){
         
         var count : UInt = 0
         var firstFetch = true
@@ -65,7 +70,7 @@ class Model{
             return
         }
         
-        self.getImageData { (imageData, imageUID, ownerID) in
+        getImageData { (imageData, imageUID, ownerID) in
             self.imageFeed[imageUID] = imageData
             self.getProfileData(uid: ownerID, success: { (profileData, numOfUsers) in
                 if (self.profileFeed[ownerID] == nil){
@@ -87,9 +92,16 @@ class Model{
 
     }
     
+    //get called in pullToRefresh
+    func getMostRecentPost (success : @escaping (Bool) -> ()) {
+        getImageData { (imageData, imageUID, ownerUID) in
+            self.imageFeed[imageUID] = imageData
+            success(true)
+        }
+    }
     
     func getImageData(success : @escaping (Image, String, String) -> Void) {
-        DBref?.child("Posts").queryLimited(toFirst: 30).observe(.childAdded, with: { (snapshot) in
+        DBref?.child("Posts").queryLimited(toFirst: 15).observe(.childAdded, with: { (snapshot) in
             
             let imageID = snapshot.key
             if let dictionary = snapshot.value as? [String : Any]{
@@ -115,7 +127,6 @@ class Model{
                 }
             }
         })
-        
     }
     
     func getImageDataAfterFetch() ->[String : Image]{

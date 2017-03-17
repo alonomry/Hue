@@ -20,17 +20,15 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
     var images : Array<Image>?
     var profile : Array<Profile>?
     var scrollToIndex : Int = 0
-    
-    
-    
+
     @IBOutlet weak var mainTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.register(feedXib, forCellReuseIdentifier: "tableFeedCell")
         mainTableView.register(feedXib, forHeaderFooterViewReuseIdentifier: "tableFeedHeader")
-//        images = Array(imageFeed.values)
         profile = Array(profileFeed.values)
+
         configurAssets()
         
     }
@@ -50,6 +48,46 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
 
     
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableFeedCell") as! TableFeedCell
+        cell.uploadedImage.contentMode = .scaleAspectFill
+        let imageData = images?[indexPath.section]
+        if let imageFeedURL = imageData?.imageURL{
+            cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageFeedURL)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let header = Bundle.main.loadNibNamed("tableFeedHeader", owner: self, options: nil)?.first as! TableFeedHeader
+        header.profileImage.layer.cornerRadius = 22
+        header.profileImage.layer.masksToBounds = true
+        
+        header.followButton.layer.borderWidth = 1
+        header.followButton.layer.borderColor = UIColor.black.cgColor
+        header.followButton.layer.cornerRadius = 10
+        header.followButton.layer.masksToBounds = true
+        
+        
+        
+        if let profileUID = images?[section].OwnerUID {
+            header.OwnerUID = profileUID
+            if let profileData = profileFeed[profileUID] {
+                header.profileUserName.text = profileData.userName
+                if let profileImagURL = profileData.profileImageURL{
+                    header.profileImage.loadImageUsingCacheWithUrlString(urlString: profileImagURL)
+                }
+            }
+        }
+        
+        return header
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -66,46 +104,6 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         let height = tableView.frame.width * (5 / 4)
         return height + 150 - 63
     }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableFeedCell") as! TableFeedCell
-        
-        cell.uploadedImage.contentMode = .scaleAspectFill
-        
-        let imageData = images?[indexPath.section]
-        
-        
-        if let imageFeedURL = imageData?.imageURL{
-            cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageFeedURL)
-        }
-        
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-        let header = Bundle.main.loadNibNamed("tableFeedHeader", owner: self, options: nil)?.first as! TableFeedHeader
-        
-        header.profileImage.layer.cornerRadius = 22
-        header.profileImage.layer.masksToBounds = true
-        
-        
-        if let profileUID = images?[section].OwnerUID {
-            print(profileUID)
-            if let profileData = profileFeed[profileUID] {
-                header.profileUserName.text = profileData.userName
-                if let profileImagURL = profileData.profileImageURL{
-                    header.profileImage.loadImageUsingCacheWithUrlString(urlString: profileImagURL)
-                }
-            }
-        }
-        
-        return header
-    }
-    
     
     func transition(sender: UIButton!){
         let commentview = storyboard?.instantiateViewController(withIdentifier: "CommentsController") as! CommentsController

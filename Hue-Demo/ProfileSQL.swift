@@ -110,7 +110,7 @@ extension Profile{
                 }
             
             if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
-                print("new row added succefully")
+//                print("new row added succefully")
             }
             }
         }

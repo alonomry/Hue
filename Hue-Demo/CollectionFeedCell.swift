@@ -40,8 +40,6 @@ class CollectionFeedCell: UICollectionViewCell {
         } catch let error {
             print(error)
         }
-
-        //EOF
         
     }
     

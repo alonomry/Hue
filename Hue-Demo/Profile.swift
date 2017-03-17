@@ -22,12 +22,12 @@ class Profile: NSObject {
     
     
     init(profileuid : String, username : String, Name : String, profileimage : String, discription : String) {
-        
         profileUID = profileuid
         userName = username
         profileName = Name
         profileImageURL = profileimage
         profileDiscription = discription
+        
     }
     
     init(profileuid :String, profilename : String, username : String, profileimage : String, discription : String, userposts : [String], userfollowers : [String], userfollowing : [String]) {
@@ -65,6 +65,7 @@ class Profile: NSObject {
                                                   ]
         return toAnyObject as AnyObject
     }
+    
 }
 
 

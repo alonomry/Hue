@@ -27,39 +27,40 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         NotificationCenter.default.addObserver(self, selector: #selector(SearchController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
     }
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         setupCollectionView()
-    
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
-//        NotificationCenter.default.addObserver(self, selector: #selector(SearchController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        NotificationCenter.default.removeObserver(self)
-    }
-    
-    func setupCollectionView(){
-        searchCollectionView.delegate = self
-        searchCollectionView.dataSource = self
-        
-        let nib = UINib(nibName: "SearchCell", bundle: nil)
-        searchCollectionView.register(nib, forCellWithReuseIdentifier: "SearchCell")
     }
     
     override func viewDidLayoutSubviews(){
         super.viewDidLayoutSubviews()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    
+    func setupCollectionView(){
+        searchCollectionView.delegate = self
+        searchCollectionView.dataSource = self
+        
+        searchCollectionView.refreshControl = UIRefreshControl()
+        searchCollectionView.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
+        
+        
+        let nib = UINib(nibName: "SearchCell", bundle: nil)
+        searchCollectionView.register(nib, forCellWithReuseIdentifier: "SearchCell")
+        
+//        self.loadingIndicator.stopAnimating()
+        
     }
     
     func loadDataAfterFetch (_ notification : Notification){
@@ -71,7 +72,8 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         //Converting the image data to Array so we could iterate
         images = Array(imagesObject.values)
         
-    
+
+        //this line is for real time image adding
         if (searchCollectionView != nil && loadingIndicator != nil){
    
             self.loadingIndicator.stopAnimating()
@@ -80,10 +82,21 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         }
     }
     
+    func handleRefresh(_ refreshControl: UIRefreshControl) {
+        
+        Model.sharedInstance.getMostRecentPost { (success) in
+            if (success){
+                self.searchCollectionView.reloadData()
+                print("REFRESHED")
+                refreshControl.endRefreshing()
+                NotificationCenter.default.post(name: .fetchNotification, object: nil)
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if let exploreVC = storyboard?.instantiateViewController(withIdentifier: "ExploreController") as? ExploreController {
-            
             exploreVC.imageFeed = imagesObject
             exploreVC.profileFeed = profileObject
             exploreVC.images = images
@@ -93,16 +106,13 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return imagesObject.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCell", for: indexPath) as! SearchCell
-        
         if let cellImage = images?[indexPath.row].imageURL {
             cell.SearchImageCell.loadImageUsingCacheWithUrlString(urlString: cellImage)
         }
@@ -111,7 +121,6 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
 
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.width)/3-1, height: (view.frame.width)/3-1)
     }
@@ -123,7 +132,6 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-    
     
 }
 
