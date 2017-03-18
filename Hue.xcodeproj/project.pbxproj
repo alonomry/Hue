@@ -34,6 +34,7 @@
 		CDC120AB1E0E7B370019AA39 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AA1E0E7B370019AA39 /* Comment.swift */; };
 		CDC120AE1E0E83D50019AA39 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC120AD1E0E83D50019AA39 /* Extention.swift */; };
 		CDC120D11E0E949B0019AA39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */; };
+		CDC2D3381E7DD1C5009B1389 /* LastUpdateTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC2D3371E7DD1C5009B1389 /* LastUpdateTable.swift */; };
 		CDF1B4471E26BB48007DFCBA /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF1B4461E26BB48007DFCBA /* ExploreController.swift */; };
 		CDF1B4491E26BCC9007DFCBA /* tableFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF1B4481E26BCC9007DFCBA /* tableFeedCell.xib */; };
 		CDF1B44B1E26BE47007DFCBA /* TableFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF1B44A1E26BE47007DFCBA /* TableFeedCell.swift */; };
@@ -76,6 +77,7 @@
 		CDC120AA1E0E7B370019AA39 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		CDC120AD1E0E83D50019AA39 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		CDC120D01E0E949B0019AA39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CDC2D3371E7DD1C5009B1389 /* LastUpdateTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastUpdateTable.swift; sourceTree = "<group>"; };
 		CDF1B4461E26BB48007DFCBA /* ExploreController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ExploreController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CDF1B4481E26BCC9007DFCBA /* tableFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableFeedCell.xib; sourceTree = "<group>"; };
 		CDF1B44A1E26BE47007DFCBA /* TableFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableFeedCell.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				CD093DAA1E7C1B6800C5FA01 /* ImageSQL.swift */,
 				CD093DAB1E7C1B6800C5FA01 /* ModelSQL.swift */,
 				CD093DAC1E7C1B6800C5FA01 /* ProfileSQL.swift */,
+				CDC2D3371E7DD1C5009B1389 /* LastUpdateTable.swift */,
 			);
 			name = SQLite;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				CD476D031E15318400EA42F5 /* AddImageViewController.swift in Sources */,
 				CD093DAE1E7C1B6800C5FA01 /* ImageSQL.swift in Sources */,
 				CD093DAF1E7C1B6800C5FA01 /* ModelSQL.swift in Sources */,
+				CDC2D3381E7DD1C5009B1389 /* LastUpdateTable.swift in Sources */,
 				CD72444A1E3BBA9D007AC332 /* ModelFirebase.swift in Sources */,
 				CD093DAD1E7C1B6800C5FA01 /* CommentSQL.swift in Sources */,
 				CD1386D51E0DDD88006FF919 /* CollectionFeedCell.swift in Sources */,

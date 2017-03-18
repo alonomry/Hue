@@ -33,7 +33,20 @@ class ModelFirebase{
         return nil
     }
     
-    func getImageData(success : @escaping (Image, String) -> Void) {
+    func getImageData(lastUpdateDate: Date? ,success : @escaping (Image, String) -> Void) {
+        
+        let ref = FIRDatabase.database().reference().child("Posts")
+        if (lastUpdateDate != nil){
+            let fbQuery = ref.queryOrdered(byChild:"Upload_Date").queryStarting(atValue:lastUpdateDate?.dateToSQL())
+            fbQuery.observe(.childAdded, with: { (snapshot) in
+                
+                let imageID = snapshot.key
+                if let dictionary = snapshot.value as? [String : Any]{
+                    let feedImage = Image(json: dictionary)
+                        success(feedImage, imageID)
+                }
+            })
+        }else{
         FIRDatabase.database().reference().child("Posts").queryLimited(toFirst: 15).observe(.childAdded, with: { (snapshot) in
             
             let imageID = snapshot.key
@@ -43,6 +56,7 @@ class ModelFirebase{
             }
         })
         
+        }
     }
     
     func getProfileData(success : @escaping (Profile, UInt) -> Void){
@@ -105,8 +119,19 @@ class ModelFirebase{
         }
     }
     
+    func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
+        let ref = FIRStorage.storage().reference(forURL: url)
+        ref.data(withMaxSize: 10000000, completion: {(data, error) in
+            if (error == nil && data != nil){
+                let image = UIImage(data: data!)
+                callback(image)
+            }else{
+                callback(nil)
+            }
+        })
+    }
+    
     func getDataBaseReference()->FIRDatabaseReference{
         return FIRDatabase.database().reference()
     }
-    
 }

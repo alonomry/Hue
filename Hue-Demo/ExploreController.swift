@@ -57,7 +57,9 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let imageData = images?[indexPath.section]
         if let imageFeedURL = imageData?.imageURL{
-            cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageFeedURL)
+            Model.sharedInstance.getImage(urlStr: imageFeedURL, callback: { (image) in
+                cell.uploadedImage.image = image
+            })
         }
         
         return cell

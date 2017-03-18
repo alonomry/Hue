@@ -130,7 +130,8 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     
     func handleRefresh(_ refreshControl: UIRefreshControl) {
         
-        Model.sharedInstance.getMostRecentPost { (success) in
+        let date = Date()
+        Model.sharedInstance.getMostRecentPost(lastUpdateDate: date) { (success) in
             if (success){
                 self.searchCollectionView.reloadData()
                 self.images = Array(self.imagesObject.values)
@@ -154,17 +155,16 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let postsArraySize = images?.count{
-            return postsArraySize
-        }
-        return 0
+        return imagesObject.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCell", for: indexPath) as! SearchCell
         if let cellImage = images?[indexPath.row].imageURL {
-            cell.SearchImageCell.loadImageUsingCacheWithUrlString(urlString: cellImage)
+            Model.sharedInstance.getImage(urlStr: cellImage, callback: { (image) in
+                cell.SearchImageCell.image = image
+            })
         }
         
         return cell

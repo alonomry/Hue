@@ -31,6 +31,7 @@ class Image : NSObject {
     }
 
     init(imageuid : String ,url : String, title : String,  nOfLikes : NSNumber , Date : Date, owner : String , comm : [String : Comment]? ) {
+        imageUID = imageuid
         imageURL = url
         imageTitle = title
         numOfLikes = nOfLikes

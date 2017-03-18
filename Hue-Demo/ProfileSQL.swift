@@ -15,12 +15,12 @@ extension Profile{
     static let Profile_userName = "userName"
     static let Profile_profileImageURL = "profileImageURL"
     static let Profile_profileDiscription = "profileDiscription"
- 
-
+    
+    
     static let userPosts_TABLE = "USERPOSTS"
     static let userPosts_ProfileUID = "ProfileUID"
     static let userPosts_ImageUID = "ImageUID"
-
+    
     static let followers_TABLE = "FOLLOWERS"
     static let followers_ProfileUID = "ProfileUID"
     static let followers_followingme = "FollowingMe"
@@ -37,13 +37,13 @@ extension Profile{
             + Profile_userName + " TEXT, "
             + Profile_profileImageURL + " TEXT, "
             + Profile_profileDiscription + " TEXT) ", nil, nil, &errormsg);
-  
+        
         if(res != 0){
             print("error creating table");
             return false
         }
         
-        let res1 = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + userPosts_TABLE + " ( " + userPosts_ProfileUID + " TEXT PRIMARY KEY, "
+        let res1 = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + userPosts_TABLE + " ( " + userPosts_ProfileUID + " TEXT, "
             + userPosts_ImageUID + " TEXT) ", nil, nil, &errormsg);
         
         if(res1 != 0){
@@ -51,7 +51,7 @@ extension Profile{
             return false
         }
         
-        let res2 = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + followers_TABLE + " ( " + followers_ProfileUID + " TEXT PRIMARY KEY, "
+        let res2 = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + followers_TABLE + " ( " + followers_ProfileUID + " TEXT, "
             + followers_followingme + " TEXT) ", nil, nil, &errormsg);
         
         if(res2 != 0){
@@ -59,7 +59,7 @@ extension Profile{
             return false
         }
         
-        let res3 = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + following_TABLE + " ( " + following_ProfileUID + " TEXT PRIMARY KEY, "
+        let res3 = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + following_TABLE + " ( " + following_ProfileUID + " TEXT, "
             + following_followafter + " TEXT) ", nil, nil, &errormsg);
         
         if(res3 != 0){
@@ -92,64 +92,70 @@ extension Profile{
             sqlite3_bind_text(sqlite3_stmt, 3, username,-1,nil);
             sqlite3_bind_text(sqlite3_stmt, 4, imageurl,-1,nil);
             sqlite3_bind_text(sqlite3_stmt, 5, profiledscription,-1,nil);
-
+            
             if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
-                print("new row added succefully")
+                print("new profile row added succefully")
             }
         }
         //inserting the user posts to the local db
-        if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Profile.userPosts_TABLE
-            + "(" + Profile.userPosts_ProfileUID + ","
-            + Profile.userPosts_ImageUID + ") VALUES (?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
-            
-            if let posts = self.userPosts{
-            
+        if let posts = self.userPosts{
             for pst in posts{
-                sqlite3_bind_text(sqlite3_stmt, 1, profileUID,-1,nil);
-                sqlite3_bind_text(sqlite3_stmt, 2, pst,-1,nil);
+                if (sqlite3_prepare_v2(database,"INSERT INTO " + Profile.userPosts_TABLE
+                    + "(" + Profile.userPosts_ProfileUID + ","
+                    + Profile.userPosts_ImageUID + ") VALUES (?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
+                    
+                    let profileuid = self.profileUID?.cString(using: .utf8)
+                    
+                    sqlite3_bind_text(sqlite3_stmt, 1, profileuid,-1,nil);
+                    sqlite3_bind_text(sqlite3_stmt, 2, pst.cString(using: .utf8),-1,nil);
+                    
+                    
+                    if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
+                        print("new row added succefully")
+                    }
                 }
-            
-            if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
-//                print("new row added succefully")
-            }
             }
         }
         //inserting the user followers
-        if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Profile.followers_TABLE
-            + "(" + Profile.followers_ProfileUID + ","
-            + Profile.followers_followingme + ") VALUES (?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
-            
-            if let followers = self.followers{
-                
-                for flwrs in followers{
-                    sqlite3_bind_text(sqlite3_stmt, 1, profileUID,-1,nil);
-                    sqlite3_bind_text(sqlite3_stmt, 2, flwrs,-1,nil);
-                }
-                
-                if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
-                    print("new row added succefully")
+        if let followers = self.followers{
+            for flwrs in followers{
+                if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Profile.followers_TABLE
+                    + "(" + Profile.followers_ProfileUID + ","
+                    + Profile.followers_followingme + ") VALUES (?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
+                    
+                    let profileuid = self.profileUID?.cString(using: .utf8)
+                    
+                    sqlite3_bind_text(sqlite3_stmt, 1, profileuid,-1,nil);
+                    sqlite3_bind_text(sqlite3_stmt, 2, flwrs.cString(using: .utf8),-1,nil);
+                    
+                    
+                    if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
+                        print("new row added succefully")
+                    }
                 }
             }
         }
         
         //inserting who user is following
-        if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Profile.following_TABLE
-            + "(" + Profile.following_ProfileUID + ","
-            + Profile.following_followafter + ") VALUES (?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
-            
-            if let followeing = self.following{
-                
-                for flwng in followeing{
-                    sqlite3_bind_text(sqlite3_stmt, 1, profileUID,-1,nil);
-                    sqlite3_bind_text(sqlite3_stmt, 2, flwng,-1,nil);
-                }
-                
-                if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
-                    print("new row added succefully")
+        if let followeing = self.following{
+            for flwng in followeing{
+                if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Profile.following_TABLE
+                    + "(" + Profile.following_ProfileUID + ","
+                    + Profile.following_followafter + ") VALUES (?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
+                    
+                    let profileuid = self.profileUID?.cString(using: .utf8)
+                    
+                    sqlite3_bind_text(sqlite3_stmt, 1, profileuid,-1,nil);
+                    sqlite3_bind_text(sqlite3_stmt, 2, flwng.cString(using: .utf8),-1,nil);
+                    
+                    if(sqlite3_step(sqlite3_stmt) == SQLITE_DONE){
+                        print("new row added succefully")
+                    }
                 }
             }
         }
         sqlite3_finalize(sqlite3_stmt)
+        
     }
     
     static func getAllProfilesFromLocalDb(database:OpaquePointer?)->[Profile]{
@@ -162,15 +168,15 @@ extension Profile{
                 let username =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,2))
                 let imageurl =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,3))
                 let profiledscription =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,4))
-
+                
                 
                 print("read from filter st: \(profileuid) \(profilename) \(username) \(imageurl) \(profiledscription)")
-//                if (imageUrl != nil && imageUrl == ""){
-//                    imageUrl = nil
-//                }
-//                let profile =  Profile(profileuid: profileuid!, profilename: profilename!, username: username!, profileimage: imageurl!, discription: profiledscription!, userposts: <#T##[String]#>, userfollowers: <#T##[String]#>, userfollowing: <#T##[String]#>)
+                //                if (imageUrl != nil && imageUrl == ""){
+                //                    imageUrl = nil
+                //                }
+                //                let profile =  Profile(profileuid: profileuid!, profilename: profilename!, username: username!, profileimage: imageurl!, discription: profiledscription!, userposts: <#T##[String]#>, userfollowers: <#T##[String]#>, userfollowing: <#T##[String]#>)
                 
-             //   profiles.append(profile)
+                //   profiles.append(profile)
             }
         }
         sqlite3_finalize(sqlite3_stmt)

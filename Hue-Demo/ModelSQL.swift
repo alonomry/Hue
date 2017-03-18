@@ -44,10 +44,9 @@ class ModelSQL{
         if Comment.createTable(database: database) == false{
             return nil
         }
-
-//        if LastUpdateTable.createTable(database: database) == false{
-//            return nil
-//        }
+        if LastUpdateTable.createTable(database: database) == false{
+            return nil
+        }
     }
 }
 

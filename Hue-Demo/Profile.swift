@@ -64,8 +64,5 @@ class Profile: NSObject {
                                                   "Following" : following as AnyObject,
                                                   ]
         return toAnyObject as AnyObject
-    }
-    
+    }    
 }
-
-
