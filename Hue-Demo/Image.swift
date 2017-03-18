@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class Image : NSObject {
 
@@ -14,14 +15,14 @@ class Image : NSObject {
     var imageURL : String?
     var imageTitle : String?
     var numOfLikes : NSNumber?
-    var uploadDate : NSDate?
+    var uploadDate : Date?
     
     var OwnerUID : String?
     var comments : [String : Comment]? = [:]
     
     override init() {}
     
-    init(imageUid : String , url : String, title : String, date : NSDate, owner : String) {
+    init(imageUid : String , url : String, title : String, date : Date, owner : String) {
         imageUID = imageUid
         imageURL = url
         imageTitle = title
@@ -29,7 +30,7 @@ class Image : NSObject {
         OwnerUID = owner
     }
 
-    init(imageuid : String ,url : String, title : String,  nOfLikes : NSNumber , Date : NSDate, owner : String , comm : [String : Comment]? ) {
+    init(imageuid : String ,url : String, title : String,  nOfLikes : NSNumber , Date : Date, owner : String , comm : [String : Comment]? ) {
         imageURL = url
         imageTitle = title
         numOfLikes = nOfLikes
@@ -44,7 +45,7 @@ class Image : NSObject {
         imageURL = json["Image_URL"] as? String
         imageTitle = json["Image_title"] as? String
         numOfLikes = json["num_of_likes"] as? NSNumber
-        uploadDate = json["Upload_Date"] as? NSDate
+        uploadDate = json["Upload_Date"] as? Date
         OwnerUID = json["OwnerUID"] as? String
         comments = json["Comments"] as? [String : Comment]
     }
@@ -54,7 +55,7 @@ class Image : NSObject {
                                                   "Image_URL" : imageURL as AnyObject,
                                                   "Image_title" : imageTitle as AnyObject,
                                                   "num_Of_likes" : numOfLikes as AnyObject,
-                                                  "Upload_Date" : uploadDate?.description as AnyObject,
+                                                  "Upload_Date" : FIRServerValue.timestamp() as AnyObject,
                                                   "OwnerUID" : OwnerUID as AnyObject,
                                                   "Comments" : comments as AnyObject]
         

@@ -9,6 +9,11 @@
 import UIKit
 import Firebase
 
+protocol followUserDelegate {
+    func isFollowing(_ ownerUID : String)->()
+}
+
+
 class TableFeedCell: UITableViewCell {
 
     
@@ -33,6 +38,8 @@ class TableFeedHeader: UITableViewCell {
     @IBOutlet weak var followButton: UIButton!
     
     
+    var delegate : followUserDelegate?
+    
     var userUID : String? = {
         if let user = Model.sharedInstance.getCurrentUser(){
             return user
@@ -48,6 +55,10 @@ class TableFeedHeader: UITableViewCell {
         
         if (userUID != nil && OwnerUID != nil) {
         
+            
+            if (delegate != nil) {
+                self.delegate?.isFollowing(OwnerUID!)
+            }
         
         let currentUserRef = FIRDatabase.database().reference().child("Users").child(userUID!).child("Following")
         let ownerRef = FIRDatabase.database().reference().child("Users").child(OwnerUID!).child("Followers")
@@ -78,6 +89,7 @@ class TableFeedHeader: UITableViewCell {
             })
             
             self.followButton.setTitle("unFollow", for: .normal)
+            
         }
     }
 

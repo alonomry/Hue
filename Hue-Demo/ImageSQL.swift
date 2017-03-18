@@ -67,7 +67,7 @@ extension Image{
             sqlite3_bind_text(sqlite3_stmt, 3, title,-1,nil);
             sqlite3_bind_int(sqlite3_stmt, 4, numoflikes as! Int32);
             if (uploadDate == nil){
-                uploadDate = NSDate()
+                uploadDate = Date()
             }
             sqlite3_bind_double(sqlite3_stmt, 5, (date?.dateToSQL())!);
             
@@ -112,7 +112,7 @@ extension Image{
                 if (imageUrl != nil && imageUrl == ""){
                     imageUrl = nil
                 }
-                let image = Image(imageuid : imId!, url: imageUrl!, title: title!, nOfLikes: numoflikes, Date: uploaddate, owner: owneruid!, comm: comments)
+                let image = Image(imageuid : imId!, url: imageUrl!, title: title!, nOfLikes: numoflikes, Date: uploaddate as Date, owner: owneruid!, comm: comments)
                 
                 images.append(image)
             }

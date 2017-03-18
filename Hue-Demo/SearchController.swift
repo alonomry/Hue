@@ -16,10 +16,11 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     
-    
+    let DBref =  Model.sharedInstance.getFireBaseReference()
     var imagesObject : [String : Image] = [:]
     var profileObject : [String : Profile] = [:]
     var index: NSIndexPath?
+    var didRemove = false
     var images : Array<Image>?
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,8 +31,17 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingIndicator.startAnimating()
-        setupCollectionView()
+        
+        //removing all the posts from users that we are following
+        removeMyFollowingFromFeed { (success) in
+            if (success){
+                self.images = Array(self.imagesObject.values)
+                self.loadingIndicator.stopAnimating()
+                self.setupCollectionView()
+            }
+        }
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -59,7 +69,7 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         let nib = UINib(nibName: "SearchCell", bundle: nil)
         searchCollectionView.register(nib, forCellWithReuseIdentifier: "SearchCell")
         
-//        self.loadingIndicator.stopAnimating()
+        searchCollectionView.reloadData()
         
     }
     
@@ -72,14 +82,50 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         //Converting the image data to Array so we could iterate
         images = Array(imagesObject.values)
         
-
-        //this line is for real time image adding
-        if (searchCollectionView != nil && loadingIndicator != nil){
-   
-            self.loadingIndicator.stopAnimating()
-            searchCollectionView.reloadData()
-            
+        if (self.searchCollectionView != nil) {
+            self.searchCollectionView.reloadData()
         }
+
+    }
+    
+    func removeMyFollowingFromFeed(success : @escaping (Bool)->()){
+        
+        if let myUserUID = Model.sharedInstance.getCurrentUser() {
+            self.DBref?.child("Users").child(myUserUID).child("Following").observeSingleEvent(of: .value, with: { (snapshot) in
+                if (snapshot.hasChildren()){
+                    if let followingUsers  = snapshot.value as? [String] {
+                        for user in followingUsers {
+                            self.removeImagesFromfeed(userFeedToRemove: user, success: { (isRemoved, numOfPosts) in
+                                if (isRemoved){
+                                    success(true)
+                                }
+                            })
+                        }
+                    }
+                }else {
+                    //the user does not follow anyone
+                    success(true)
+                }
+            }) { (error) in
+                print(error)
+            }
+        }
+    }
+    
+    func removeImagesFromfeed(userFeedToRemove : String, success : @escaping (Bool,Int) ->()){
+        self.DBref?.child("Users").child(userFeedToRemove).child("User_Posts").observeSingleEvent(of: .value, with: { (snapshot) in
+            if (snapshot.hasChildren()){
+                if let userPosts = snapshot.value as? [String] {
+                    for post in userPosts {
+                        self.imagesObject.removeValue(forKey: post)
+                        success(true, userPosts.count)
+                    }
+                }
+            }
+        }) { (error) in
+            print(error)
+        }
+        
     }
     
     func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -87,6 +133,7 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         Model.sharedInstance.getMostRecentPost { (success) in
             if (success){
                 self.searchCollectionView.reloadData()
+                self.images = Array(self.imagesObject.values)
                 print("REFRESHED")
                 refreshControl.endRefreshing()
                 NotificationCenter.default.post(name: .fetchNotification, object: nil)
@@ -107,7 +154,10 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagesObject.count
+        if let postsArraySize = images?.count{
+            return postsArraySize
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

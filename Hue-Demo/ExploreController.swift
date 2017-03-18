@@ -54,6 +54,7 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableFeedCell") as! TableFeedCell
         cell.uploadedImage.contentMode = .scaleAspectFill
+        
         let imageData = images?[indexPath.section]
         if let imageFeedURL = imageData?.imageURL{
             cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageFeedURL)

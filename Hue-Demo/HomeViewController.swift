@@ -17,6 +17,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         handleLogout()
     }
     
+    var imageFeed =  [String : Image]()
+    var profileFeed = [String : Profile]()
+    var images : Array<Image>?
+    var profile : Array<Profile>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +34,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
             self.present(loginVC!, animated: true, completion: nil)
         }else {
-            //already Loggedin
+            imageFeed = Model.sharedInstance.getImageDataAfterFetch()
+            profileFeed = Model.sharedInstance.getProfileDataAfterFetch()
+            images = Array(imageFeed.values)
+            profile = Array (profileFeed.values)
         }
     }
     
@@ -54,6 +61,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         mainFeedCollectioView.delegate = self
         mainFeedCollectioView.dataSource = self
         
+        let nib = UINib(nibName: "collectionFeedCell", bundle: nil)
+        mainFeedCollectioView.register(nib, forCellWithReuseIdentifier: "collectionFeedCell")
+        
     }
     
     @IBAction func unwindFromSignUp(segue : UIStoryboardSegue){
@@ -64,15 +74,43 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        if let numOfPosts = images?.count {
+            return numOfPosts
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let nib = UINib(nibName: "collectionFeedCell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "collectionFeedCell")
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionFeedCell", for: indexPath) as! CollectionFeedCell
+        
         cell.profileImage.layer.cornerRadius = 22
         cell.profileImage.layer.masksToBounds = true
+        
+        if let imageData = images?[indexPath.row] {
+            
+            //loading the image
+            if let imageURL = imageData.imageURL {
+                cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageURL)
+            }
+            
+            if let numOfLikes = imageData.numOfLikes {
+                cell.numOfLikes.text = numOfLikes.stringValue
+            }
+            
+        }
+        
+        if let profileData = profile?[indexPath.row] {
+            if let profileImageURL = profileData.profileImageURL {
+                cell.profileImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
+            }
+            if let profileUserName = profileData.userName {
+                cell.profileName.text = profileUserName
+            }
+        }
+        
+        
+        
         return cell
     }
     
