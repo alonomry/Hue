@@ -15,7 +15,7 @@ class ModelFirebase{
         //Connecting to FireBase
         FIRApp.configure()
     }
-
+    
     func getUser()->FIRUser?{
         if let user = FIRAuth.auth()?.currentUser{
             return user
@@ -33,48 +33,59 @@ class ModelFirebase{
         return nil
     }
     
-    func getImageData(lastUpdateDate: Date? ,success : @escaping (Image, String) -> Void) {
+    func getImageData(lastUpdateDate: Date? ,success : @escaping ([String : Image]) -> Void) {
+        var imagePosts = [String : Image]()
         
-        let ref = FIRDatabase.database().reference().child("Posts")
-        if (lastUpdateDate != nil){
-            let fbQuery = ref.queryOrdered(byChild:"Upload_Date").queryStarting(atValue:lastUpdateDate?.dateToSQL())
-            fbQuery.observe(.childAdded, with: { (snapshot) in
-                
-                let imageID = snapshot.key
-                if let dictionary = snapshot.value as? [String : Any]{
-                    let feedImage = Image(json: dictionary)
-                        success(feedImage, imageID)
-                }
-            })
-        }else{
-        FIRDatabase.database().reference().child("Posts").queryLimited(toFirst: 15).observe(.childAdded, with: { (snapshot) in
-            
-            let imageID = snapshot.key
-            if let dictionary = snapshot.value as? [String : Any]{
-                let feedImage = Image(json: dictionary)
-                success(feedImage, imageID)
-            }
-        })
-        
-        }
-    }
-    
-    func getProfileData(success : @escaping (Profile, UInt) -> Void){
-        FIRDatabase.database().reference().child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            if let users = snapshot.value as? [String : Any] {
-                for user in users {
-                    if let userProfile = user.value as? [String : Any]{
-                        let feedProfile = Profile(json: userProfile)
-                        
-                        //Sending the profile obj, num of childeren
-                        success(feedProfile, snapshot.childrenCount)
+        let handler = {(snapshot : FIRDataSnapshot) in
+            for child in snapshot.children.allObjects {
+                if let post = child as? FIRDataSnapshot {
+                    if let dictionary = post.value as? Dictionary<String, Any> {
+                        let feedImage = Image(json: dictionary)
+                        imagePosts[post.key] = feedImage
                     }
                 }
             }
-        })
+            success(imagePosts)
+        }
+        let DBref = FIRDatabase.database().reference().child("Posts")
+        
+        if (lastUpdateDate != nil){
+            let fbQuery = DBref.queryOrdered(byChild:"Upload_Date").queryStarting(atValue:lastUpdateDate?.dateToSQL())
+            fbQuery.observe(FIRDataEventType.value, with: handler)
+        }else{
+            DBref.queryLimited(toFirst: 15).observe(FIRDataEventType.value, with: handler)
+        }
+        
+        
+        
+        
+        
     }
-    
+
+    func getProfileData(success : @escaping ([String : Profile]) -> Void){
+        
+        var Profiles = [String : Profile]()
+        
+        let handler = {(snapshot : FIRDataSnapshot) in
+            
+
+            for child in snapshot.children.allObjects {
+                if let user = child as? FIRDataSnapshot {
+                    if let dictionary = user.value as? Dictionary<String, Any> {
+                        let feedProfile = Profile(json: dictionary)
+                        if let userUID = feedProfile.profileUID {
+                            Profiles[userUID] = feedProfile
+                        }
+                    }
+                }
+            }
+            success(Profiles)
+        }
+        let DBref = FIRDatabase.database().reference().child("Users")
+        DBref.observe(FIRDataEventType.value, with: handler)
+        
+    }
+
     func saveImageToFireBase(image : UIImage, success : @escaping (String)->()){
         
         if let userUID = getUser()?.uid {

@@ -23,7 +23,6 @@ class Model{
         self.fetchFeed { (success) in
             //Posting a notification that the fetch has been completed
             if (success){
-                self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
                 NotificationCenter.default.post(name: .fetchNotification , object: nil)
             }
         }
@@ -63,7 +62,6 @@ class Model{
     
     private func fetchFeed(success: @escaping (Bool) ->()){
         
-        var count : UInt = 0
         var firstFetch = true
         
         //checking if there is a usere connected
@@ -74,79 +72,81 @@ class Model{
         // get last update date from SQL
         var lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSQL?.database, table: Image.Image_TABLE)
         
-        getImageData(lastUpdateDate: lastUpdateDate, success: { (imageData, imageUID) in
+        self.getImageData(lastUpdateDate: lastUpdateDate, success: { (imagePosts) in
             
-            if let imageURL = imageData.imageURL {
-                self.modelFirebase?.getImageFromFirebase(url: imageURL, callback: { (image) in
-                    if let imageFile = image {
-                        self.saveImageToFile(image: imageFile, name: imageUID, sucsess: { (filePath) in
-                            imageData.imageURL = filePath
-                            imageData.addImageToLocalDb(database: self.modelSQL?.database)
-                        })
-                    }
-                })
-            }
-            
-            if let imageUploadDate = imageData.uploadDate{
-                if lastUpdateDate == nil{
-                    lastUpdateDate = imageUploadDate
+            for image in imagePosts.values {
+                
+                //getting the image url and saving locally
+                if let imageURL = image.imageURL {
+                    self.modelFirebase?.getImageFromFirebase(url: imageURL, callback: { (imageFromFB) in
+                        if let imageFile = imageFromFB {
+                            if let imageUID = image.imageUID {
+                                self.saveImageToFile(image: imageFile, name: imageUID, sucsess: { (filePath) in
+                                    image.imageURL = filePath
+                                    image.addImageToLocalDb(database: self.modelSQL?.database)
+                                })
+                            }
+                        }
+                    })
                 }
-                else{
-                    if lastUpdateDate!.compare(imageUploadDate) == ComparisonResult.orderedAscending{
+                
+                //checking the last modt recent upload date
+                if let imageUploadDate = image.uploadDate{
+                    if lastUpdateDate == nil{
                         lastUpdateDate = imageUploadDate
                     }
+                    else{
+                        if lastUpdateDate!.compare(imageUploadDate) == ComparisonResult.orderedAscending{
+                            lastUpdateDate = imageUploadDate
+                        }
+                    }
                 }
             }
             
-            self.getProfileData(success: { (profileData, numOfUsers) in
-                
-                
-                
-                if let ownerID = profileData.profileUID {
-                    
-                    if (self.profileFeed[ownerID] == nil){
-                        self.profileFeed[ownerID] = profileData
-                        profileData.addProfileToLocalDb(database: self.modelSQL?.database)
-                        count = count + 1
-                        if (count == numOfUsers){
-                            if (lastUpdateDate != nil){
-                                LastUpdateTable.setLastUpdate(database: self.modelSQL?.database, table: Image.Image_TABLE, lastUpdate: lastUpdateDate!)
-                            }
-
-
-                            print("DONE FETCHING")
-                            firstFetch = false
-                            success(true)
-                        }
-                    }
-                    if (!firstFetch){
-                        success(true)
-                    }
-                }
-            })
-        
+            
+            if (lastUpdateDate != nil){
+                LastUpdateTable.setLastUpdate(database: self.modelSQL?.database, table: Image.Image_TABLE, lastUpdate: lastUpdateDate!)
+            }
+            
+            self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
+            
         })
-
+        self.getProfileData(success: { (profiles) in
+            
+            for profile in profiles.values {
+                profile.addProfileToLocalDb(database: self.modelSQL?.database)
+            }
+            
+            self.profileFeed = profiles
+            
+            print("DONE FETCHING")
+            firstFetch = false
+            success(true)
+        })
+        
+        if (!firstFetch){
+            success(true)
+        }
     }
 
     //get called in pullToRefresh
     func getMostRecentPost (lastUpdateDate: Date, success : @escaping (Bool) -> ()) {
-        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imageData, imageUID) in
-            self.imageFeed[imageUID] = imageData
+        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
+            self.imageFeed = imagePosts
             success(true)
         })
     }
     
-    func getImageData(lastUpdateDate: Date?, success : @escaping (Image, String) -> Void) {
-        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imageData, imageUID) in
-            success(imageData, imageUID)
+    func getImageData(lastUpdateDate: Date?, success : @escaping ([String : Image]) -> Void) {
+        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
+            success(imagePosts)
         })
     }
 
     
-    func getProfileData(success: @escaping (Profile, UInt) -> Void){
-       modelFirebase?.getProfileData(success: { (profileData, numOfUsers) in
-            success(profileData, numOfUsers)
+    func getProfileData(success: @escaping ([String : Profile]) -> Void){
+       modelFirebase?.getProfileData(success: { (profiles) in
+            success(profiles)
        })
     }
     
