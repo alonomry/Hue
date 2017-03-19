@@ -20,6 +20,7 @@
 		CD1386CF1E0DC607006FF919 /* collectionFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1386CE1E0DC607006FF919 /* collectionFeedCell.xib */; };
 		CD1386D11E0DD743006FF919 /* feed.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD1386D01E0DD743006FF919 /* feed.xib */; };
 		CD1386D51E0DDD88006FF919 /* CollectionFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1386D41E0DDD88006FF919 /* CollectionFeedCell.swift */; };
+		CD32DFC31E7F1EDC00DC5D82 /* CommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD32DFC21E7F1EDC00DC5D82 /* CommentsCell.xib */; };
 		CD476D031E15318400EA42F5 /* AddImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD476D021E15318400EA42F5 /* AddImageViewController.swift */; };
 		CD653F401E2815850042C047 /* tableFeedHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD653F3F1E2815850042C047 /* tableFeedHeader.xib */; };
 		CD72444A1E3BBA9D007AC332 /* ModelFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */; };
@@ -40,7 +41,6 @@
 		CDF1B44B1E26BE47007DFCBA /* TableFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDF1B44A1E26BE47007DFCBA /* TableFeedCell.swift */; };
 		DF659C2C1E0ECD5500E3ACBD /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */; };
 		DF659C2E1E0ECE2100E3ACBD /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C2D1E0ECE2100E3ACBD /* SearchCell.swift */; };
-		DF659C321E0EDA1600E3ACBD /* CommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF659C311E0EDA1600E3ACBD /* CommentsCell.xib */; };
 		DF659C341E0EDD7D00E3ACBD /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C331E0EDD7D00E3ACBD /* CommentsCell.swift */; };
 		DF659C361E0EDE2D00E3ACBD /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF659C351E0EDE2D00E3ACBD /* CommentsController.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +63,7 @@
 		CD1386CE1E0DC607006FF919 /* collectionFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = collectionFeedCell.xib; sourceTree = "<group>"; };
 		CD1386D01E0DD743006FF919 /* feed.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = feed.xib; sourceTree = "<group>"; };
 		CD1386D41E0DDD88006FF919 /* CollectionFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionFeedCell.swift; sourceTree = "<group>"; };
+		CD32DFC21E7F1EDC00DC5D82 /* CommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsCell.xib; sourceTree = "<group>"; };
 		CD476D021E15318400EA42F5 /* AddImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageViewController.swift; sourceTree = "<group>"; };
 		CD653F3F1E2815850042C047 /* tableFeedHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = tableFeedHeader.xib; sourceTree = "<group>"; };
 		CD7244491E3BBA9D007AC332 /* ModelFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFirebase.swift; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		CDF1B44A1E26BE47007DFCBA /* TableFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableFeedCell.swift; sourceTree = "<group>"; };
 		DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
 		DF659C2D1E0ECE2100E3ACBD /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
-		DF659C311E0EDA1600E3ACBD /* CommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentsCell.xib; sourceTree = "<group>"; };
 		DF659C331E0EDD7D00E3ACBD /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		DF659C351E0EDE2D00E3ACBD /* CommentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
 		EB3A6F07422B015B6A5AF6CA /* Pods-Hue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hue/Pods-Hue.debug.xcconfig"; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				CD653F3F1E2815850042C047 /* tableFeedHeader.xib */,
 				CD1386D01E0DD743006FF919 /* feed.xib */,
 				DF659C2B1E0ECD5500E3ACBD /* SearchCell.xib */,
-				DF659C311E0EDA1600E3ACBD /* CommentsCell.xib */,
+				CD32DFC21E7F1EDC00DC5D82 /* CommentsCell.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -309,8 +309,8 @@
 				DF659C2C1E0ECD5500E3ACBD /* SearchCell.xib in Resources */,
 				CD1386C01E0D72BA006FF919 /* Main.storyboard in Resources */,
 				CDC120D11E0E949B0019AA39 /* GoogleService-Info.plist in Resources */,
-				DF659C321E0EDA1600E3ACBD /* CommentsCell.xib in Resources */,
 				CD653F401E2815850042C047 /* tableFeedHeader.xib in Resources */,
+				CD32DFC31E7F1EDC00DC5D82 /* CommentsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

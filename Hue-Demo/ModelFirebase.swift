@@ -23,14 +23,64 @@ class ModelFirebase{
         return nil
     }
     
-    func logout()->Error? {
+    func logout(success : @escaping (Bool)->() ) {
         do{
             try FIRAuth.auth()?.signOut()
+            success(true)
         }catch let error{
             print(error)
-            return error as Error
+            success(false)
         }
-        return nil
+    }
+    
+    
+    func getComments(success : @escaping ([String : Comment]) -> Void){
+        
+        var Comments = [String : Comment]()
+        
+        let handler = {(snapshot : FIRDataSnapshot) in
+            
+            for child in snapshot.children.allObjects{
+                if let comm = child as? FIRDataSnapshot{
+                    if let dictionary = comm.value as? Dictionary<String, Any> {
+                        
+                        let comment = Comment(json: dictionary)
+                        if let commentUID = comment.commentUID {
+                            Comments[commentUID] = comment
+                        }
+                    }
+                }
+            }
+            success(Comments)
+        }
+        let DBref = FIRDatabase.database().reference()
+        DBref.observe(FIRDataEventType.childAdded, with: handler)
+        
+    }
+    
+    func saveCommentToFireBase(comment : Comment, success : @escaping (Bool)->()){
+        if let commentUID = comment.commentUID, let imageUID = comment.imageUID{
+            
+            //Adding the comment object to firbase database
+            let commentRef = FIRDatabase.database().reference().child("Comments").child(commentUID)
+            commentRef.setValue(comment.toAnyObject())
+            
+            //Updating or Adding imageName to the user Posts array
+            let postCommentRef = FIRDatabase.database().reference().child("Posts").child(imageUID).child("User_Comments")
+            
+            postCommentRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if (snapshot.hasChildren()){
+                    if var postcomments = snapshot.value as? [String] {
+                        postcomments.append(commentUID)
+                        postCommentRef.setValue(postcomments)
+                    }
+                }
+                else {
+                    postCommentRef.setValue([commentUID])
+                }
+                success(true)
+            })
+        }
     }
     
     func getImageData(lastUpdateDate: Date? ,success : @escaping ([String : Image]) -> Void) {

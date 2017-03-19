@@ -23,11 +23,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var images : Array<Image>?
     var profile : Array<Profile>?
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.loadDataForNewLogin(_:)), name: .newLogin, object: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingPage.stopAnimating()
         verifyLoginUser()
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
         setupNavBar()
     }
     
@@ -43,6 +49,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func handleLogout(){
         if (Model.sharedInstance.handleLogout()){
             let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
+            NotificationCenter.default.post(name: .logout, object: nil)
+            self.dismiss(animated: true, completion: nil )
             self.present(loginVC!, animated: true, completion: nil)
         }
         
@@ -79,8 +87,26 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             loadingPage.stopAnimating()
             mainFeedCollectioView.reloadData()
         }
+    }
+    
+    func loadDataForNewLogin (_ notification : Notification){
         
-        
+        Model.sharedInstance.fetchFeed(success: { (success) in
+            if (success){
+                //Getting the Data from Model
+                self.imagesObject = Model.sharedInstance.getImageDataAfterFetch()
+                self.profileObject = Model.sharedInstance.getProfileDataAfterFetch()
+                
+                //Converting the image data to Array so we could iterate
+                self.images = Array(self.imagesObject.values)
+                
+                if (self.mainFeedCollectioView != nil ){
+                    self.profile = Array(self.profileObject.values)
+                    self.loadingPage.stopAnimating()
+                    self.mainFeedCollectioView.reloadData()
+                }
+            }
+        })
     }
     
     @IBAction func unwindFromSignUp(segue : UIStoryboardSegue){

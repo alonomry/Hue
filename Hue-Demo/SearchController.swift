@@ -19,6 +19,7 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     let DBref =  Model.sharedInstance.getFireBaseReference()
     var imagesObject : [String : Image] = [:]
     var profileObject : [String : Profile] = [:]
+    var commentObject : [String : Comment] = [:]
     var index: NSIndexPath?
     var didRemove = false
     var images : Array<Image>?
@@ -26,28 +27,45 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         NotificationCenter.default.addObserver(self, selector: #selector(SearchController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchController.logout(_:)), name: .logout, object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         
-        
-        
+            self.images = Array (self.imagesObject.values)
+            sleep(UInt32(0.09))
+            self.setupCollectionView()
         //removing all the posts from users that we are following
-        Model.sharedInstance.removeMyFollowingFromFeed({ (success) in
-            if (success){
-                self.loadingIndicator.stopAnimating()
-                self.setupCollectionView()
-            }
-        })
+//        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
+//            self.loadingIndicator.stopAnimating()
+//
+//        self.imagesObject = withoutFollowing
+//        if (!withoutFollowing.isEmpty){
+//            }else{
+//                self.setupCollectionView()                
+//            }
+//        })
 
     }
-
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
+        //removing all the posts from users that we are following
+        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
+            self.loadingIndicator.stopAnimating()
+            
+            if (!withoutFollowing.isEmpty){
+                self.imagesObject = withoutFollowing
+                self.images = Array (self.imagesObject.values)
+                sleep(UInt32(0.09))
+                self.setupCollectionView()
+            }else{
+                self.setupCollectionView()
+            }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,13 +83,12 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         searchCollectionView.dataSource = self
         
         searchCollectionView.refreshControl = UIRefreshControl()
-        searchCollectionView.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
-        
         
         let nib = UINib(nibName: "SearchCell", bundle: nil)
         searchCollectionView.register(nib, forCellWithReuseIdentifier: "SearchCell")
         
-        searchCollectionView.reloadData()
+        searchCollectionView.refreshControl = UIRefreshControl()
+        searchCollectionView.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: .valueChanged)
         
     }
     
@@ -80,11 +97,10 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         //Getting the Data from Model
         imagesObject = Model.sharedInstance.getImageDataAfterFetch()
         profileObject = Model.sharedInstance.getProfileDataAfterFetch()
+        commentObject = Model.sharedInstance.getCommentsAfterFetch()
         
         //Converting the image data to Array so we could iterate
         images = Array(imagesObject.values)
-        
-
         
         if (self.searchCollectionView != nil) {
             self.searchCollectionView.reloadData()
@@ -94,11 +110,20 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     
     func handleRefresh(_ refreshControl: UIRefreshControl) {
         
-        Model.sharedInstance.getMostRecentPost(lastUpdateDate: nil) { (success) in
-            if (success){
+        
+        Model.sharedInstance.getMostRecentPost(lastUpdateDate: nil) { (withoutFollowing) in
+            if (!withoutFollowing.isEmpty){
+                self.imagesObject = withoutFollowing
+                self.images = Array (self.imagesObject.values)
                 print("REFRESHED")
+                sleep(UInt32(0.01))
+                self.searchCollectionView.reloadData()
                 refreshControl.endRefreshing()
-                NotificationCenter.default.post(name: .fetchNotification, object: nil)
+            }else {
+                print("REFRESHED")
+                sleep(UInt32(0.01))
+                self.searchCollectionView.reloadData()
+                refreshControl.endRefreshing()
             }
         }
     }
@@ -108,6 +133,7 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         if let exploreVC = storyboard?.instantiateViewController(withIdentifier: "ExploreController") as? ExploreController {
             exploreVC.imageFeed = imagesObject
             exploreVC.profileFeed = profileObject
+            exploreVC.commentFeed = commentObject
             exploreVC.images = images
             exploreVC.scrollToIndex = indexPath.row
             self.navigationController?.show(exploreVC, sender: self)
@@ -131,6 +157,11 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         return cell
     }
     
+    func logout (_ notification : Notification){
+        
+        self.dismiss(animated: false, completion: nil)
+        self.view.removeFromSuperview()
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.width)/3-1, height: (view.frame.width)/3-1)

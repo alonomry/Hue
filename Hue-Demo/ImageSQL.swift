@@ -18,6 +18,9 @@ extension Image{
     static let Image_ownerUID = "ownerUID"
     static let Image_comments = "comments"
     
+    static let Comment_Table = "COMMENT"
+    
+    
     
     static func createTable(database:OpaquePointer?)->Bool{
         var errormsg: UnsafeMutablePointer<Int8>? = nil
@@ -103,24 +106,21 @@ extension Image{
                 let uploaddate = Date(timeIntervalSince1970: sqlite3_column_double(sqlite3_stmt, 4))
                 let owneruid = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,5))
                 
-                var comments : [String : Comment]? = [:]
-                //                if (sqlite3_prepare_v2(database,"SELECT * from COMMENTS WHERE imageUID = imId ;",-1,&sqlite3_stmt,nil) == SQLITE_OK){
-                //                    while(sqlite3_step(sqlite3_stmt) == SQLITE_ROW){
-                //                        let imId =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,0))
-                //                        let commentedProfileImage =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,1))
-                //                        let commentedProfileName =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,2))
-                //                        let comment =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,3))
-                //
-                //                        comments?[imId!] = Comment(imageuid: imId!, commprofileImage: commentedProfileImage!, commprofileName: commentedProfileName!, comm: comment!)
-                //                    }
-                //                }
                 
+                let comments = Comment.getAllCommentsFromLocalDb(database: database)
+                var newComments : [String] = []
+                
+                for com in comments{
+                    if com.imageUID == imId!{
+                        newComments.append(com.commentUID!)
+                    }
+                }
                 
                 print("read from filter st: \(imId) \(imageUrl) \(title) \(numoflikes) \(uploaddate) \(owneruid)")
                 if (imageUrl != nil && imageUrl == ""){
                     imageUrl = nil
                 }
-                let image = Image(imageuid : imId!, url: imageUrl!, title: title!, nOfLikes: numoflikes, Date: uploaddate, owner: owneruid!, comm: comments)
+                let image = Image(imageuid : imId!, url: imageUrl!, title: title!, nOfLikes: numoflikes, Date: uploaddate, owner: owneruid!, comm: newComments)
                 if let imageID = image.imageUID {
                     images[imageID] = image
                 }

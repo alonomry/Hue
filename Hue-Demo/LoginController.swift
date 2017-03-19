@@ -29,7 +29,9 @@ class LoginController: UIViewController {
                     self.loginErrorHandle(error: "Wrong Email or Password")
                 }else{
                     UIApplication.shared.statusBarStyle = .default
-                    self.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: { 
+                        NotificationCenter.default.post(name: .newLogin, object: nil)
+                    })
                 }
             })
         }

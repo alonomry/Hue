@@ -12,6 +12,10 @@ import Firebase
 protocol followUserDelegate {
     func isFollowing(_ ownerUID : String)->()
 }
+protocol CommentButtonDelegate {
+    func changeWindow(_ imageUID : String)->()
+}
+
 
 
 class TableFeedCell: UITableViewCell {
@@ -23,6 +27,18 @@ class TableFeedCell: UITableViewCell {
     @IBOutlet weak var elapsedTimeSinceUpload: UILabel!
     @IBOutlet weak var commentButton: UIButton!
     
+    
+    var delegate : CommentButtonDelegate?
+    
+    var imageUID : String?
+    
+    @IBAction func commentButtonWasPressed(_ sender: Any) {
+        if let imageuid = imageUID {
+            if (delegate != nil) {
+                self.delegate?.changeWindow(imageuid)
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

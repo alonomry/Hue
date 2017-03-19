@@ -31,6 +31,7 @@ class Model{
     
     var imageFeed =  [String : Image]()
     var profileFeed = [String : Profile]()
+    var commentFeed = [String : Comment]()
     var DBref : FIRDatabaseReference?
     private var modelFirebase: ModelFirebase?
     private var modelSQL : ModelSQL?
@@ -52,15 +53,14 @@ class Model{
     }
     
     func handleLogout()->Bool{
-        if modelFirebase?.logout() == nil {
-            return true
-        }else{
-            return false
-        }
-        
+        var didLogout = false
+        modelFirebase?.logout(success: { (loggedOut) in
+            didLogout = loggedOut
+        })
+        return didLogout
     }
     
-    private func fetchFeed(success: @escaping (Bool) ->()){
+    func fetchFeed(success: @escaping (Bool) ->()){
         
         var firstFetch = false
         
@@ -116,7 +116,11 @@ class Model{
                 self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
             }
             
+            if (!firstFetch){
+                success(true)
+            }
         })
+        
         self.getProfileData(success: { (profiles) in
             
             for profile in profiles.values {
@@ -124,27 +128,47 @@ class Model{
             }
             
             self.profileFeed = profiles
-            
-            print("DONE FETCHING")
-            success(true)
+//            
+//            print("DONE FETCHING")
+//            success(true)
         })
         
-        if (!firstFetch){
+        self.getComment(callback: {(comments) in
+            
+            for comment in comments.values {
+                comment.addCommentToLocalDb(database: self.modelSQL?.database)
+                
+            }
+            
+            self.commentFeed = comments
+            
+            //            print("DONE FETCHING")
             success(true)
-        }
+            
+            
+        })
     }
     
+    
+    
     //get called in pullToRefresh
-    func getMostRecentPost (lastUpdateDate: Date?, success : @escaping (Bool) -> ()) {
+    func getMostRecentPost (lastUpdateDate: Date?, success : @escaping ([String : Image]) -> ()) {
         modelFirebase?.getImageData(lastUpdateDate: nil ,success: { (imagePosts) in
-            self.removeMyFollowingFromFeed({ (didRemove) in
-                if (didRemove){
-                    self.imageFeed = imagePosts
-                    success(true)                    
+            self.removeMyFollowingFromFeed({ (withoutFollowing) in
+                if (!imagePosts.isEmpty){
+                    success(withoutFollowing)
                 }
             })
         })
     }
+    
+    //get called in pullToRefresh
+//    func getMostRecentPost (lastUpdateDate: Date, success : @escaping (Bool) -> ()) {
+//        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
+//            self.imageFeed = imagePosts
+//            success(true)
+//        })
+//    }
     
     func getImageData(lastUpdateDate: Date?, success : @escaping ([String : Image]) -> Void) {
         modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
@@ -194,6 +218,20 @@ class Model{
         
     }
     
+    func getComment( callback:@escaping ([String :Comment])->Void){
+        modelFirebase?.getComments(success: { (coments) in
+            callback(coments)
+        })
+    }
+    
+    func saveComment(comment : Comment){
+        //1.upload comment to firebase database
+        modelFirebase?.saveCommentToFireBase(comment: comment, success:{ (bool) in
+            //2. upload comment to loacal storage
+            comment.addCommentToLocalDb(database: self.modelSQL?.database)
+        })
+    }
+    
     private func saveImageToFile(image:UIImage, name:String , sucsess : @escaping(String)->()){
         if let data = UIImageJPEGRepresentation(image, 0.8) {
             createDirectory(directoryName: name)
@@ -218,21 +256,42 @@ class Model{
         }
     }
     
-    func removeMyFollowingFromFeed(_ success : @escaping (Bool)->()){
+    func removeMyFollowingFromFeed(_ success : @escaping ([String : Image])->()){
+        var withoutFollowing = self.getImageDataAfterFetch()
+        
         modelFirebase?.getMyFollowing(success: { (following) in
-            for user in following {
-                self.modelFirebase?.getUserPosts(userFeedToRemove: user, success: { (posts) in
-                    for post in posts {
-                        self.imageFeed.removeValue(forKey: post)
-                    }
-                    NotificationCenter.default.post(name: .fetchNotification, object: nil)
-                })
+            print(following.isEmpty)
+            if (!following.isEmpty){
+                for user in following {
+                    self.modelFirebase?.getUserPosts(userFeedToRemove: user, success: { (posts) in
+                        if (!posts.isEmpty) {
+                            for post in posts {
+                                withoutFollowing.removeValue(forKey: post)
+                            }
+                            success(withoutFollowing)
+                        }
+                    })
+                }
             }
-            success(true)
         })
     }
     
-    
+    func getMyFollowoingFeed(_ success : @escaping (Bool)->()){
+        var followingFeed = [String : Image]()
+        modelFirebase?.getMyFollowing(success: { (following) in
+            for user in following {
+               self.modelFirebase?.getUserPosts(userFeedToRemove: user, success: { (posts) in
+                for post in posts {
+                    followingFeed[post] = self.imageFeed[post]
+                }
+                self.imageFeed = followingFeed
+                success(true)
+                NotificationCenter.default.post(name: .fetchNotification, object: nil)
+               })
+            }
+        })
+        
+    }
     
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in:
@@ -250,10 +309,13 @@ class Model{
         return profileFeed
     }
     
+    func getCommentsAfterFetch() -> [String : Comment]{
+        return commentFeed
+    }
+    
     func getFireBaseReference() -> FIRDatabaseReference? {
         return DBref
     }
-    
 }
 
 extension Date {
@@ -275,6 +337,6 @@ extension Date {
             return Date(timeIntervalSince1970: interval)
         }
     }
-    
+ 
 }
 

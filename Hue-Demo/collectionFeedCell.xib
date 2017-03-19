@@ -73,9 +73,6 @@
                                     <constraint firstAttribute="width" constant="23" id="gwc-VW-eXo"/>
                                 </constraints>
                                 <state key="normal" image="Comment"/>
-                                <connections>
-                                    <action selector="commentButton:" destination="Ucy-e8-rOE" eventType="touchUpInside" id="nTt-Ga-UV6"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJi-3A-G9G">
                                 <rect key="frame" x="74" y="0.0" width="23" height="23"/>
@@ -186,6 +183,6 @@
         <image name="Love-F" width="25" height="25"/>
         <image name="More" width="20" height="5"/>
         <image name="SendMessage" width="25" height="25"/>
-        <image name="loading" width="612" height="610"/>
+        <image name="loading" width="577" height="577"/>
     </resources>
 </document>

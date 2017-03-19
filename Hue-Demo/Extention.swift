@@ -54,6 +54,8 @@ extension UIImageView {
 
 extension Notification.Name {
     public static let fetchNotification = Notification.Name(rawValue: "done_fetching")
+    public static let newLogin = Notification.Name(rawValue : "login_occurred")
+    public static let logout = Notification.Name(rawValue : "logout_occurred")
 }
 
 

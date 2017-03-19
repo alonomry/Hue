@@ -10,7 +10,7 @@ import UIKit
 import FirebaseDatabase
 
 class Image : NSObject {
-
+    
     var imageUID : String?
     var imageURL : String?
     var imageTitle : String?
@@ -18,7 +18,7 @@ class Image : NSObject {
     var uploadDate : Date?
     
     var OwnerUID : String?
-    var comments : [String : Comment]? = [:]
+    var comments : [String]?
     
     override init() {}
     
@@ -29,8 +29,8 @@ class Image : NSObject {
         uploadDate = date
         OwnerUID = owner
     }
-
-    init(imageuid : String ,url : String, title : String,  nOfLikes : NSNumber , Date : Date, owner : String , comm : [String : Comment]? ) {
+    
+    init(imageuid : String ,url : String, title : String,  nOfLikes : NSNumber , Date : Date, owner : String , comm : [String]? ) {
         imageUID = imageuid
         imageURL = url
         imageTitle = title
@@ -46,11 +46,11 @@ class Image : NSObject {
         imageURL = json["Image_URL"] as? String
         imageTitle = json["Image_title"] as? String
         numOfLikes = json["num_of_likes"] as? NSNumber
-        if let uDate = json["Upload_Date"] as? Double{
-            uploadDate = Date.fromFirebase(uDate)
+        if let udate = json["Upload_Date"] as? Double{
+            uploadDate = Date.fromFirebase(udate)
         }
         OwnerUID = json["OwnerUID"] as? String
-        comments = json["Comments"] as? [String : Comment]
+        comments = json["User_Comments"] as? [String]
     }
     
     func toAnyObject() -> AnyObject{
@@ -60,7 +60,7 @@ class Image : NSObject {
                                                   "num_Of_likes" : numOfLikes as AnyObject,
                                                   "Upload_Date" : FIRServerValue.timestamp() as AnyObject,
                                                   "OwnerUID" : OwnerUID as AnyObject,
-                                                  "Comments" : comments as AnyObject]
+                                                  "User_Comments" : comments as AnyObject]
         
         return toAnyObject as AnyObject
     }

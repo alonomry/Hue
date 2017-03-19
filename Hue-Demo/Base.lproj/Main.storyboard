@@ -497,34 +497,6 @@
             </objects>
             <point key="canvasLocation" x="-2938.4000000000001" y="-1101.4992503748126"/>
         </scene>
-        <!--Comments Controller-->
-        <scene sceneID="aZH-ik-aYf">
-            <objects>
-                <viewController storyboardIdentifier="CommentsController" automaticallyAdjustsScrollViewInsets="NO" id="VPM-dg-qkB" customClass="CommentsController" customModule="Hue" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EJc-mw-zSn"/>
-                        <viewControllerLayoutGuide type="bottom" id="DeA-QK-WnM"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nZx-ic-omF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0p5-4H-XhQ">
-                                <rect key="frame" x="0.0" y="57" width="375" height="564"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="CommentsTableView" destination="0p5-4H-XhQ" id="95p-H0-GUS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NI1-7r-rqQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2178" y="-1101"/>
-        </scene>
         <!--Add Image View Controller-->
         <scene sceneID="jp4-Lw-6gS">
             <objects>
@@ -622,6 +594,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z7r-Rf-dg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4452" y="-1101"/>
+        </scene>
+        <!--Comments Controller-->
+        <scene sceneID="N5G-id-sBX">
+            <objects>
+                <viewController storyboardIdentifier="CommentsController" automaticallyAdjustsScrollViewInsets="NO" id="zKc-9x-AP4" customClass="CommentsController" customModule="Hue" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OwO-4R-F3G"/>
+                        <viewControllerLayoutGuide type="bottom" id="vuv-cu-ElP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EsC-kI-NFW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="91J-nx-w9O">
+                                <rect key="frame" x="0.0" y="20" width="375" height="597"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommentsCell" id="W6z-jP-TBS" customClass="CommentsCell" customModule="Hue" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W6z-jP-TBS" id="qeW-so-pBf">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tN-TV-c5g">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8mL-HW-SZB">
+                                        <rect key="frame" x="16" y="8" width="343" height="34"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w70-cp-UkA">
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="34"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nzw-ap-bQh">
+                                                <rect key="frame" x="309" y="0.0" width="34" height="34"/>
+                                                <state key="normal" title="send"/>
+                                                <connections>
+                                                    <action selector="SendButtonWasPressed:" destination="zKc-9x-AP4" eventType="touchUpInside" id="7Kk-we-bIv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1nV-li-AIu"/>
+                                    <constraint firstAttribute="bottom" secondItem="8mL-HW-SZB" secondAttribute="bottom" constant="8" id="AJl-it-LfC"/>
+                                    <constraint firstAttribute="trailing" secondItem="8mL-HW-SZB" secondAttribute="trailing" constant="16" id="VkP-QU-n2S"/>
+                                    <constraint firstItem="8mL-HW-SZB" firstAttribute="top" secondItem="5tN-TV-c5g" secondAttribute="top" constant="8" id="nGo-bx-oz8"/>
+                                    <constraint firstItem="8mL-HW-SZB" firstAttribute="leading" secondItem="5tN-TV-c5g" secondAttribute="leading" constant="16" id="vuI-WQ-fu9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5tN-TV-c5g" firstAttribute="top" secondItem="91J-nx-w9O" secondAttribute="bottom" id="608-aI-dWZ"/>
+                            <constraint firstItem="5tN-TV-c5g" firstAttribute="leading" secondItem="EsC-kI-NFW" secondAttribute="leading" id="8Wg-qB-shb"/>
+                            <constraint firstItem="91J-nx-w9O" firstAttribute="trailing" secondItem="5tN-TV-c5g" secondAttribute="trailing" id="8mh-0h-tER"/>
+                            <constraint firstItem="91J-nx-w9O" firstAttribute="top" secondItem="OwO-4R-F3G" secondAttribute="bottom" id="SI7-PR-xFS"/>
+                            <constraint firstAttribute="trailing" secondItem="5tN-TV-c5g" secondAttribute="trailing" id="ZSz-1c-Uak"/>
+                            <constraint firstItem="91J-nx-w9O" firstAttribute="leading" secondItem="5tN-TV-c5g" secondAttribute="leading" id="rzi-tS-9jp"/>
+                            <constraint firstItem="vuv-cu-ElP" firstAttribute="top" secondItem="5tN-TV-c5g" secondAttribute="bottom" id="tZx-15-Eq9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="CommentsTableView" destination="91J-nx-w9O" id="slE-Fw-7hA"/>
+                        <outlet property="SendButton" destination="nzw-ap-bQh" id="d1J-kM-d02"/>
+                        <outlet property="TextField" destination="w70-cp-UkA" id="g0r-RZ-cKu"/>
+                        <outlet property="bottomLayoutConstraint" destination="tZx-15-Eq9" id="zxE-6Q-eJH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TO0-Iw-3BI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2178.4000000000001" y="-1101.4992503748126"/>
         </scene>
     </scenes>
     <resources>

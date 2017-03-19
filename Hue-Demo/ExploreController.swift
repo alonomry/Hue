@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommentButtonDelegate{
     
     let feedXib = UINib(nibName: "tableFeedCell", bundle: nil)
     let DBref =  FIRDatabase.database().reference()
@@ -17,6 +17,7 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
     let uid = FIRAuth.auth()?.currentUser?.uid
     var imageFeed =  [String : Image]()
     var profileFeed = [String : Profile]()
+    var commentFeed = [String : Comment]()
     var images : Array<Image>?
     var profile : Array<Profile>?
     var scrollToIndex : Int = 0
@@ -31,6 +32,33 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
 
         configurAssets()
         
+    }
+    
+    func changeWindow(_ imageUID : String)->(){
+        var imageComments : [String :Comment]? = [:]
+        
+        if let comments = imageFeed[imageUID]?.comments{
+            for comm in comments{
+                imageComments?[comm] = commentFeed[comm]
+            }
+            if let commentVC = storyboard?.instantiateViewController(withIdentifier: "CommentsController") as? CommentsController {
+                if let imComm = imageComments{
+                    if let userID = uid{
+                        if let profileURL = profileFeed[userID]?.profileImageURL, let profileName = profileFeed[userID]?.profileName{
+                            commentVC.commentsDictionary = imComm
+                            commentVC.imageUID = imageUID
+                            commentVC.commentedProfileImage = profileURL
+                            commentVC.commentedProfileName = profileName
+                            self.navigationController?.show(commentVC, sender: self)
+                            
+                        }
+                        
+                        
+                    }
+                }
+            }
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +88,8 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         if let imageFeedURL = imageData?.imageURL{
             Model.sharedInstance.getImage(urlStr: imageFeedURL, callback: { (image) in
                 cell.uploadedImage.image = image
+                cell.imageUID = imageData?.imageUID
+                cell.delegate = self
             })
         }
         if let numOfLikes = imageData?.numOfLikes?.stringValue {
