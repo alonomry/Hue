@@ -46,7 +46,9 @@ class Image : NSObject {
         imageURL = json["Image_URL"] as? String
         imageTitle = json["Image_title"] as? String
         numOfLikes = json["num_of_likes"] as? NSNumber
-        uploadDate = json["Upload_Date"] as? Date
+        if let uDate = json["Upload_Date"] as? Double{
+            uploadDate = Date.fromFirebase(uDate)
+        }
         OwnerUID = json["OwnerUID"] as? String
         comments = json["Comments"] as? [String : Comment]
     }

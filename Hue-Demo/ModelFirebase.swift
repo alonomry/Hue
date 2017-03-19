@@ -55,20 +55,15 @@ class ModelFirebase{
         }else{
             DBref.queryLimited(toFirst: 15).observe(FIRDataEventType.value, with: handler)
         }
-        
-        
-        
-        
-        
     }
-
+    
     func getProfileData(success : @escaping ([String : Profile]) -> Void){
         
         var Profiles = [String : Profile]()
         
         let handler = {(snapshot : FIRDataSnapshot) in
             
-
+            
             for child in snapshot.children.allObjects {
                 if let user = child as? FIRDataSnapshot {
                     if let dictionary = user.value as? Dictionary<String, Any> {
@@ -85,50 +80,81 @@ class ModelFirebase{
         DBref.observe(FIRDataEventType.value, with: handler)
         
     }
-
+    
     func saveImageToFireBase(image : UIImage, success : @escaping (String)->()){
         
         if let userUID = getUser()?.uid {
             
-                    //Adding the image to firebase storage
-                    let metaData = FIRStorageMetadata()
-                    let imageName = NSUUID().uuidString
-                    let userUploadRef = FIRStorage.storage().reference().child(userUID).child("Uploads").child("\(imageName).jpeg")
-                    if let userData = UIImageJPEGRepresentation(image, 0.8){
-                        metaData.contentType = "image/jpeg"
-                        userUploadRef.put(userData, metadata: metaData, completion: { (metadata : FIRStorageMetadata?, error : Error?) in
-                            if error != nil{
-                                print(error!)
-                                return
+            //Adding the image to firebase storage
+            let metaData = FIRStorageMetadata()
+            let imageName = NSUUID().uuidString
+            let userUploadRef = FIRStorage.storage().reference().child(userUID).child("Uploads").child("\(imageName).jpeg")
+            if let userData = UIImageJPEGRepresentation(image, 0.8){
+                metaData.contentType = "image/jpeg"
+                userUploadRef.put(userData, metadata: metaData, completion: { (metadata : FIRStorageMetadata?, error : Error?) in
+                    if error != nil{
+                        print(error!)
+                        return
+                    }
+                    
+                    //Adding the image object to firbase database
+                    if let imageDownloadURL = metadata?.downloadURL()?.absoluteString{
+                        let uploadTime = Date()
+                        let upload = Image(imageUid : imageName ,url: imageDownloadURL, title: "", date: uploadTime , owner: userUID)
+                        let userProfileRef = FIRDatabase.database().reference().child("Posts").child(imageName)
+                        userProfileRef.setValue(upload.toAnyObject())
+                        
+                        //Updating or Adding imageName to the user Posts array
+                        let userPostsRef = FIRDatabase.database().reference().child("Users").child(userUID).child("User_Posts")
+                        
+                        userPostsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                            if (snapshot.hasChildren()){
+                                if var userPosts = snapshot.value as? [String] {
+                                    userPosts.append(imageName)
+                                    userPostsRef.setValue(userPosts)
+                                }
                             }
-            
-                            //Adding the image object to firbase database
-                            if let imageDownloadURL = metadata?.downloadURL()?.absoluteString{
-                                let uploadTime = Date()
-                                let upload = Image(imageUid : imageName ,url: imageDownloadURL, title: "", date: uploadTime , owner: userUID)
-                                let userProfileRef = FIRDatabase.database().reference().child("Posts").child(imageName)
-                                userProfileRef.setValue(upload.toAnyObject())
-            
-                            //Updating or Adding imageName to the user Posts array
-                                let userPostsRef = FIRDatabase.database().reference().child("Users").child(userUID).child("User_Posts")
-            
-                                userPostsRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                                    if (snapshot.hasChildren()){
-                                        if var userPosts = snapshot.value as? [String] {
-                                            userPosts.append(imageName)
-                                            userPostsRef.setValue(userPosts)
-                                        }
-                                    }
-                                    else {
-                                        userPostsRef.setValue([imageName])
-                                    }
-                                })
+                            else {
+                                userPostsRef.setValue([imageName])
                             }
-                            
+                            success(imageName)
                         })
                     }
+                    
+                })
+            }
         }
     }
+
+    func getMyFollowing(success : @escaping ([String])->()){
+        
+        if let myUserUID = getUser()?.uid {
+            
+            let handler = {(snapshot : FIRDataSnapshot) in
+                if (snapshot.hasChildren()){
+                    if let followingUsers = snapshot.value as? [String] {
+                        success(followingUsers)
+                    }
+                }
+            }            
+            let DBref = FIRDatabase.database().reference().child("Users").child(myUserUID).child("Following")
+            DBref.observeSingleEvent(of: FIRDataEventType.value, with: handler)
+        }
+    }
+    
+    func getUserPosts(userFeedToRemove : String, success : @escaping ([String])->()){
+    
+            let handler = {(snapshot : FIRDataSnapshot) in
+                if (snapshot.hasChildren()){
+                    if let userPosts = snapshot.value as? [String] {
+                        success(userPosts)
+                    }
+                }
+            }
+            let DBref = FIRDatabase.database().reference().child("Users").child(userFeedToRemove).child("User_Posts")
+            DBref.observeSingleEvent(of: FIRDataEventType.value, with: handler)
+    }
+    
     
     func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
         let ref = FIRStorage.storage().reference(forURL: url)

@@ -26,9 +26,9 @@ class Model{
                 NotificationCenter.default.post(name: .fetchNotification , object: nil)
             }
         }
-
+        
     }
-
+    
     var imageFeed =  [String : Image]()
     var profileFeed = [String : Profile]()
     var DBref : FIRDatabaseReference?
@@ -37,7 +37,7 @@ class Model{
     
     func getCurrentUser() -> String? {
         if let user = modelFirebase?.getUser() {
-             return user.uid
+            return user.uid
         }
         return nil
     }
@@ -62,7 +62,7 @@ class Model{
     
     private func fetchFeed(success: @escaping (Bool) ->()){
         
-        var firstFetch = true
+        var firstFetch = false
         
         //checking if there is a usere connected
         guard let _ = modelFirebase?.getUser() else {
@@ -90,12 +90,14 @@ class Model{
                     })
                 }
                 
-                //checking the last modt recent upload date
+                //checking the most recent upload date
                 if let imageUploadDate = image.uploadDate{
                     if lastUpdateDate == nil{
                         lastUpdateDate = imageUploadDate
+                        firstFetch = true
                     }
                     else{
+                        
                         if lastUpdateDate!.compare(imageUploadDate) == ComparisonResult.orderedAscending{
                             lastUpdateDate = imageUploadDate
                         }
@@ -108,7 +110,11 @@ class Model{
                 LastUpdateTable.setLastUpdate(database: self.modelSQL?.database, table: Image.Image_TABLE, lastUpdate: lastUpdateDate!)
             }
             
-            self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
+            if (firstFetch){
+                self.imageFeed = imagePosts
+            }else{
+                self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
+            }
             
         })
         self.getProfileData(success: { (profiles) in
@@ -120,7 +126,6 @@ class Model{
             self.profileFeed = profiles
             
             print("DONE FETCHING")
-            firstFetch = false
             success(true)
         })
         
@@ -128,12 +133,16 @@ class Model{
             success(true)
         }
     }
-
+    
     //get called in pullToRefresh
-    func getMostRecentPost (lastUpdateDate: Date, success : @escaping (Bool) -> ()) {
-        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
-            self.imageFeed = imagePosts
-            success(true)
+    func getMostRecentPost (lastUpdateDate: Date?, success : @escaping (Bool) -> ()) {
+        modelFirebase?.getImageData(lastUpdateDate: nil ,success: { (imagePosts) in
+            self.removeMyFollowingFromFeed({ (didRemove) in
+                if (didRemove){
+                    self.imageFeed = imagePosts
+                    success(true)                    
+                }
+            })
         })
     }
     
@@ -142,12 +151,12 @@ class Model{
             success(imagePosts)
         })
     }
-
+    
     
     func getProfileData(success: @escaping ([String : Profile]) -> Void){
-       modelFirebase?.getProfileData(success: { (profiles) in
+        modelFirebase?.getProfileData(success: { (profiles) in
             success(profiles)
-       })
+        })
     }
     
     func getImage(urlStr:String , callback:@escaping (UIImage)->Void){
@@ -209,6 +218,21 @@ class Model{
         }
     }
     
+    func removeMyFollowingFromFeed(_ success : @escaping (Bool)->()){
+        modelFirebase?.getMyFollowing(success: { (following) in
+            for user in following {
+                self.modelFirebase?.getUserPosts(userFeedToRemove: user, success: { (posts) in
+                    for post in posts {
+                        self.imageFeed.removeValue(forKey: post)
+                    }
+                    NotificationCenter.default.post(name: .fetchNotification, object: nil)
+                })
+            }
+            success(true)
+        })
+    }
+    
+    
     
     private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in:
@@ -227,7 +251,7 @@ class Model{
     }
     
     func getFireBaseReference() -> FIRDatabaseReference? {
-            return DBref
+        return DBref
     }
     
 }

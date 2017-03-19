@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Connecting to FireBase
 //        FIRApp.configure()
-        //Changing the Bat tint Color
+        //Changing the Bar tint Color
         UITabBar.appearance().tintColor = UIColor.black
         
         return true

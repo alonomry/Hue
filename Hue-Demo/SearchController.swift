@@ -32,17 +32,19 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         
+        
+        
         //removing all the posts from users that we are following
-        removeMyFollowingFromFeed { (success) in
+        Model.sharedInstance.removeMyFollowingFromFeed({ (success) in
             if (success){
-                self.images = Array(self.imagesObject.values)
                 self.loadingIndicator.stopAnimating()
                 self.setupCollectionView()
             }
-        }
+        })
+
     }
-    
-    
+
+
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
@@ -82,59 +84,18 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         //Converting the image data to Array so we could iterate
         images = Array(imagesObject.values)
         
+
+        
         if (self.searchCollectionView != nil) {
             self.searchCollectionView.reloadData()
         }
 
     }
     
-    func removeMyFollowingFromFeed(success : @escaping (Bool)->()){
-        
-        if let myUserUID = Model.sharedInstance.getCurrentUser() {
-            self.DBref?.child("Users").child(myUserUID).child("Following").observeSingleEvent(of: .value, with: { (snapshot) in
-                if (snapshot.hasChildren()){
-                    if let followingUsers  = snapshot.value as? [String] {
-                        for user in followingUsers {
-                            self.removeImagesFromfeed(userFeedToRemove: user, success: { (isRemoved, numOfPosts) in
-                                if (isRemoved){
-                                    success(true)
-                                }
-                            })
-                        }
-                    }
-                }else {
-                    //the user does not follow anyone
-                    success(true)
-                }
-            }) { (error) in
-                print(error)
-            }
-        }
-    }
-    
-    func removeImagesFromfeed(userFeedToRemove : String, success : @escaping (Bool,Int) ->()){
-        self.DBref?.child("Users").child(userFeedToRemove).child("User_Posts").observeSingleEvent(of: .value, with: { (snapshot) in
-            if (snapshot.hasChildren()){
-                if let userPosts = snapshot.value as? [String] {
-                    for post in userPosts {
-                        self.imagesObject.removeValue(forKey: post)
-                        success(true, userPosts.count)
-                    }
-                }
-            }
-        }) { (error) in
-            print(error)
-        }
-        
-    }
-    
     func handleRefresh(_ refreshControl: UIRefreshControl) {
         
-        let date = Date()
-        Model.sharedInstance.getMostRecentPost(lastUpdateDate: date) { (success) in
+        Model.sharedInstance.getMostRecentPost(lastUpdateDate: nil) { (success) in
             if (success){
-                self.searchCollectionView.reloadData()
-                self.images = Array(self.imagesObject.values)
                 print("REFRESHED")
                 refreshControl.endRefreshing()
                 NotificationCenter.default.post(name: .fetchNotification, object: nil)
@@ -185,7 +146,4 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     
 }
 
-extension Notification.Name {
-    public static let fetchNotification = Notification.Name(rawValue: "done_fetching")
-}
 

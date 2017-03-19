@@ -52,3 +52,8 @@ extension UIImageView {
     }
 }
 
+extension Notification.Name {
+    public static let fetchNotification = Notification.Name(rawValue: "done_fetching")
+}
+
+

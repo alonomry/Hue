@@ -33,6 +33,14 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Uth-nZ-nhB">
+                                <rect key="frame" x="168" y="313.5" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="hCW-eS-uyU"/>
+                                    <constraint firstAttribute="height" constant="40" id="r7I-m2-UGR"/>
+                                </constraints>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -40,6 +48,8 @@
                             <constraint firstItem="xEu-Rj-j1v" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Hpz-Hi-ewK"/>
                             <constraint firstAttribute="trailing" secondItem="xEu-Rj-j1v" secondAttribute="trailing" id="J6H-Ul-Bob"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="xEu-Rj-j1v" secondAttribute="bottom" id="ekv-FZ-O3w"/>
+                            <constraint firstItem="Uth-nZ-nhB" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="gG4-Wk-VRW"/>
+                            <constraint firstItem="Uth-nZ-nhB" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="uid-nm-jqs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FCG-Y6-Be6">
@@ -54,6 +64,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="loadingPage" destination="Uth-nZ-nhB" id="iin-9Z-bie"/>
                         <outlet property="mainFeedCollectioView" destination="xEu-Rj-j1v" id="6Jc-pe-aeX"/>
                     </connections>
                 </viewController>

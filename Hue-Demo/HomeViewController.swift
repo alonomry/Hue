@@ -11,22 +11,24 @@ import Firebase
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var loadingPage: UIActivityIndicatorView!
     @IBOutlet weak var mainFeedCollectioView: UICollectionView!
 
     @IBAction func logoutButtonWasPressed(_ sender: Any) {
         handleLogout()
     }
     
-    var imageFeed =  [String : Image]()
-    var profileFeed = [String : Profile]()
+    var imagesObject =  [String : Image]()
+    var profileObject = [String : Profile]()
     var images : Array<Image>?
     var profile : Array<Profile>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingPage.stopAnimating()
         verifyLoginUser()
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
         setupNavBar()
-        setupCollectionView()
     }
     
     func verifyLoginUser(){
@@ -34,10 +36,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let loginVC = storyboard?.instantiateViewController(withIdentifier: "loginVC") as? LoginController
             self.present(loginVC!, animated: true, completion: nil)
         }else {
-            imageFeed = Model.sharedInstance.getImageDataAfterFetch()
-            profileFeed = Model.sharedInstance.getProfileDataAfterFetch()
-            images = Array(imageFeed.values)
-            profile = Array (profileFeed.values)
+            setupCollectionView()
         }
     }
     
@@ -66,6 +65,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    func loadDataAfterFetch (_ notification : Notification){
+        
+        //Getting the Data from Model
+        imagesObject = Model.sharedInstance.getImageDataAfterFetch()
+        profileObject = Model.sharedInstance.getProfileDataAfterFetch()
+        
+        //Converting the image data to Array so we could iterate
+        images = Array(imagesObject.values)
+        
+        if (mainFeedCollectioView != nil ){
+            profile = Array(profileObject.values)
+            loadingPage.stopAnimating()
+            mainFeedCollectioView.reloadData()
+        }
+        
+        
+    }
+    
     @IBAction func unwindFromSignUp(segue : UIStoryboardSegue){
     }
     
@@ -74,10 +91,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let numOfPosts = images?.count {
-            return numOfPosts
-        }
-        return 0
+        return imagesObject.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,7 +105,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             //loading the image
             if let imageURL = imageData.imageURL {
-                cell.uploadedImage.loadImageUsingCacheWithUrlString(urlString: imageURL)
+                Model.sharedInstance.getImage(urlStr: imageURL, callback: { (image) in
+                    cell.uploadedImage.image = image
+                  
+                })
             }
             
             if let numOfLikes = imageData.numOfLikes {
@@ -100,17 +117,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
         }
         
-        if let profileData = profile?[indexPath.row] {
-            if let profileImageURL = profileData.profileImageURL {
-                cell.profileImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
-            }
-            if let profileUserName = profileData.userName {
-                cell.profileName.text = profileUserName
+        
+        if let profileUID = images?[indexPath.row].OwnerUID {
+            if let profileData = profileObject[profileUID]{
+    
+                if let profileImageURL = profileData.profileImageURL {
+                    Model.sharedInstance.getImage(urlStr: profileImageURL, callback: { (image) in
+                        cell.profileImage.image = image
+                    })
+                }
+                if let profileUserName = profileData.userName {
+                    cell.profileName.text = profileUserName
+                }
+                
             }
         }
-        
-        
-        
+    
+    
+    
         return cell
     }
     

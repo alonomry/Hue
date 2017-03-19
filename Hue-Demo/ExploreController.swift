@@ -56,12 +56,15 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.uploadedImage.contentMode = .scaleAspectFill
         
         let imageData = images?[indexPath.section]
+
         if let imageFeedURL = imageData?.imageURL{
             Model.sharedInstance.getImage(urlStr: imageFeedURL, callback: { (image) in
                 cell.uploadedImage.image = image
             })
         }
-        
+        if let numOfLikes = imageData?.numOfLikes?.stringValue {
+            cell.numOfLikes.text = numOfLikes
+        }
         return cell
     }
     
