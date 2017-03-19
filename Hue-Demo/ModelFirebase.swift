@@ -176,33 +176,38 @@ class ModelFirebase{
         }
     }
 
-    func getMyFollowing(success : @escaping ([String])->()){
+    func getMyFollowing(complition : @escaping ([String])->()){
         
         if let myUserUID = getUser()?.uid {
             
             let handler = {(snapshot : FIRDataSnapshot) in
                 if (snapshot.hasChildren()){
                     if let followingUsers = snapshot.value as? [String] {
-                        success(followingUsers)
+                        complition(followingUsers)
                     }
+                }else{
+                    //sending an empty array
+                    complition([])
                 }
-            }            
+            }
             let DBref = FIRDatabase.database().reference().child("Users").child(myUserUID).child("Following")
-            DBref.observeSingleEvent(of: FIRDataEventType.value, with: handler)
+            DBref.observe(FIRDataEventType.value, with: handler)
         }
     }
     
-    func getUserPosts(userFeedToRemove : String, success : @escaping ([String])->()){
+    func getUserPosts(userFeedToRemove : String, complition : @escaping ([String])->()){
     
             let handler = {(snapshot : FIRDataSnapshot) in
                 if (snapshot.hasChildren()){
                     if let userPosts = snapshot.value as? [String] {
-                        success(userPosts)
+                        complition(userPosts)
                     }
+                }else{
+                    complition([])
                 }
             }
             let DBref = FIRDatabase.database().reference().child("Users").child(userFeedToRemove).child("User_Posts")
-            DBref.observeSingleEvent(of: FIRDataEventType.value, with: handler)
+            DBref.observe(FIRDataEventType.value, with: handler)
     }
     
     

@@ -171,12 +171,6 @@ extension Profile{
                 
                 
                 print("read from filter st: \(profileuid) \(profilename) \(username) \(imageurl) \(profiledscription)")
-                //                if (imageUrl != nil && imageUrl == ""){
-                //                    imageUrl = nil
-                //                }
-                //                let profile =  Profile(profileuid: profileuid!, profilename: profilename!, username: username!, profileimage: imageurl!, discription: profiledscription!, userposts: <#T##[String]#>, userfollowers: <#T##[String]#>, userfollowing: <#T##[String]#>)
-                
-                //   profiles.append(profile)
             }
         }
         sqlite3_finalize(sqlite3_stmt)

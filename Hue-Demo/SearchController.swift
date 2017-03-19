@@ -34,38 +34,31 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         
-            self.images = Array (self.imagesObject.values)
-            sleep(UInt32(0.09))
-            self.setupCollectionView()
+        
         //removing all the posts from users that we are following
-//        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
-//            self.loadingIndicator.stopAnimating()
-//
-//        self.imagesObject = withoutFollowing
-//        if (!withoutFollowing.isEmpty){
-//            }else{
-//                self.setupCollectionView()                
-//            }
-//        })
-
+        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
+            if (!withoutFollowing.isEmpty){
+                self.loadingIndicator.stopAnimating()
+                self.images = Array (self.imagesObject.values)
+                sleep(UInt32(0.09))
+                self.setupCollectionView()
+            }else{
+                self.loadingIndicator.stopAnimating()
+                sleep(UInt32(0.09))
+                self.setupCollectionView()
+            }
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
-        //removing all the posts from users that we are following
-        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
+        Model.sharedInstance.removeMyFollowingFromFeed { (withoutFollowing) in
             self.loadingIndicator.stopAnimating()
-            
-            if (!withoutFollowing.isEmpty){
-                self.imagesObject = withoutFollowing
-                self.images = Array (self.imagesObject.values)
-                sleep(UInt32(0.09))
-                self.setupCollectionView()
-            }else{
-                self.setupCollectionView()
-            }
-        })
+            self.images = Array (self.imagesObject.values)
+            sleep(UInt32(0.09))
+            self.setupCollectionView()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,8 +74,6 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     func setupCollectionView(){
         searchCollectionView.delegate = self
         searchCollectionView.dataSource = self
-        
-        searchCollectionView.refreshControl = UIRefreshControl()
         
         let nib = UINib(nibName: "SearchCell", bundle: nil)
         searchCollectionView.register(nib, forCellWithReuseIdentifier: "SearchCell")

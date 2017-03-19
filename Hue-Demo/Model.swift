@@ -116,9 +116,11 @@ class Model{
                 self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
             }
             
-            if (!firstFetch){
-                success(true)
-            }
+//            if (!firstFetch){
+//                success(true)
+//            }
+            
+            success(true)
         })
         
         self.getProfileData(success: { (profiles) in
@@ -128,9 +130,9 @@ class Model{
             }
             
             self.profileFeed = profiles
-//            
-//            print("DONE FETCHING")
-//            success(true)
+            
+            success(true)
+            
         })
         
         self.getComment(callback: {(comments) in
@@ -142,7 +144,6 @@ class Model{
             
             self.commentFeed = comments
             
-            //            print("DONE FETCHING")
             success(true)
             
             
@@ -156,19 +157,13 @@ class Model{
         modelFirebase?.getImageData(lastUpdateDate: nil ,success: { (imagePosts) in
             self.removeMyFollowingFromFeed({ (withoutFollowing) in
                 if (!imagePosts.isEmpty){
+                    success(imagePosts)
+                }else{
                     success(withoutFollowing)
                 }
             })
         })
     }
-    
-    //get called in pullToRefresh
-//    func getMostRecentPost (lastUpdateDate: Date, success : @escaping (Bool) -> ()) {
-//        modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
-//            self.imageFeed = imagePosts
-//            success(true)
-//        })
-//    }
     
     func getImageData(lastUpdateDate: Date?, success : @escaping ([String : Image]) -> Void) {
         modelFirebase?.getImageData(lastUpdateDate: lastUpdateDate ,success: { (imagePosts) in
@@ -257,30 +252,31 @@ class Model{
     }
     
     func removeMyFollowingFromFeed(_ success : @escaping ([String : Image])->()){
-        var withoutFollowing = self.getImageDataAfterFetch()
         
-        modelFirebase?.getMyFollowing(success: { (following) in
-            print(following.isEmpty)
+        var withoutFollowing = self.getImageDataAfterFetch()
+                
+        modelFirebase?.getMyFollowing(complition: { (following) in
             if (!following.isEmpty){
                 for user in following {
-                    self.modelFirebase?.getUserPosts(userFeedToRemove: user, success: { (posts) in
-                        if (!posts.isEmpty) {
-                            for post in posts {
-                                withoutFollowing.removeValue(forKey: post)
-                            }
-                            success(withoutFollowing)
+                    self.modelFirebase?.getUserPosts(userFeedToRemove: user, complition: { (posts) in
+                        for post in posts {
+                            withoutFollowing.removeValue(forKey: post)
                         }
+                        success(withoutFollowing)
                     })
                 }
+            }else{
+                //sending an empty array
+                success([:])
             }
         })
     }
     
     func getMyFollowoingFeed(_ success : @escaping (Bool)->()){
         var followingFeed = [String : Image]()
-        modelFirebase?.getMyFollowing(success: { (following) in
+        modelFirebase?.getMyFollowing(complition: { (following) in
             for user in following {
-               self.modelFirebase?.getUserPosts(userFeedToRemove: user, success: { (posts) in
+               self.modelFirebase?.getUserPosts(userFeedToRemove: user, complition: { (posts) in
                 for post in posts {
                     followingFeed[post] = self.imageFeed[post]
                 }
