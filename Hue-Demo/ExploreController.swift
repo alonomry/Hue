@@ -26,6 +26,9 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SearchController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
+        
         mainTableView.register(feedXib, forCellReuseIdentifier: "tableFeedCell")
         mainTableView.register(feedXib, forHeaderFooterViewReuseIdentifier: "tableFeedHeader")
         profile = Array(profileFeed.values)
@@ -75,7 +78,16 @@ class ExploreController: UIViewController, UITableViewDelegate, UITableViewDataS
         mainTableView.dataSource = self
     }
 
-    
+    func loadDataAfterFetch (_ notification : Notification){
+        //Getting the Data from Model
+        imageFeed = Model.sharedInstance.getImageDataAfterFetch()
+        profileFeed = Model.sharedInstance.getProfileDataAfterFetch()
+        commentFeed = Model.sharedInstance.getCommentsAfterFetch()
+        
+        images = Array(imageFeed.values)
+
+        
+    }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

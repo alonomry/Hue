@@ -33,32 +33,51 @@ class ModelFirebase{
         }
     }
     
-    
     func getComments(success : @escaping ([String : Comment]) -> Void){
         
         var Comments = [String : Comment]()
         
         let handler = {(snapshot : FIRDataSnapshot) in
             
-            for child in snapshot.children.allObjects{
-                if let comm = child as? FIRDataSnapshot{
-                    if let dictionary = comm.value as? Dictionary<String, Any> {
+                if let comm = snapshot.value as? Dictionary<String, Any> {
                         
-                        let comment = Comment(json: dictionary)
+                        let comment = Comment(json: comm)
                         if let commentUID = comment.commentUID {
                             Comments[commentUID] = comment
                         }
                     }
-                }
-            }
             success(Comments)
         }
-        let DBref = FIRDatabase.database().reference()
+        let DBref = FIRDatabase.database().reference().child("Comments")
         DBref.observe(FIRDataEventType.childAdded, with: handler)
         
     }
     
-    func saveCommentToFireBase(comment : Comment, success : @escaping (Bool)->()){
+//    func getComments(success : @escaping ([String : Comment]) -> Void){
+//        
+//        var Comments = [String : Comment]()
+//        
+//        let handler = {(snapshot : FIRDataSnapshot) in
+//            
+//            for child in snapshot.children.allObjects{
+//                if let comm = child as? FIRDataSnapshot{
+//                    if let dictionary = comm.value as? Dictionary<String, Any> {
+//                        
+//                        let comment = Comment(json: dictionary)
+//                        if let commentUID = comment.commentUID {
+//                            Comments[commentUID] = comment
+//                        }
+//                    }
+//                }
+//            }
+//            success(Comments)
+//        }
+//        let DBref = FIRDatabase.database().reference()
+//        DBref.observe(FIRDataEventType.childAdded, with: handler)
+//        
+//    }
+    
+    func saveCommentToFireBase(comment : Comment, success : @escaping (Bool, String)->()){
         if let commentUID = comment.commentUID, let imageUID = comment.imageUID{
             
             //Adding the comment object to firbase database
@@ -73,12 +92,13 @@ class ModelFirebase{
                     if var postcomments = snapshot.value as? [String] {
                         postcomments.append(commentUID)
                         postCommentRef.setValue(postcomments)
+                        
                     }
                 }
                 else {
                     postCommentRef.setValue([commentUID])
                 }
-                success(true)
+                success(true, commentUID)
             })
         }
     }

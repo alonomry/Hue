@@ -32,6 +32,7 @@ class CommentsController: UIViewController, UITableViewDelegate, UITableViewData
             let comment = Comment(imageuid: imageuid, commentuid : commentUID, commprofileImage: commentedprofileimage, commprofileName: commentedprofilename, comm: messegeContent)
             Model.sharedInstance.saveComment(comment: comment)
             
+            
         }
         keyboardWillHide()
         TextField.text = ""
@@ -41,6 +42,8 @@ class CommentsController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(CommentsController.loadDataAfterFetch(_:)), name: .fetchNotification, object: nil)
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CommentsController.keyboardWillHide))
         view.addGestureRecognizer(tap)
         comments = Array(commentsDictionary.values)
@@ -64,6 +67,25 @@ class CommentsController: UIViewController, UITableViewDelegate, UITableViewData
         CommentsTableView.register(nib, forCellReuseIdentifier: "CommentsCell")
     }
     
+    
+    func loadDataAfterFetch (_ notification : Notification){
+        if (self.CommentsTableView != nil){
+            let updatedComments = Model.sharedInstance.getCommentsAfterFetch()
+            
+            if let newCommentsArray = Model.sharedInstance.getImageDataAfterFetch()[imageUID!]?.comments{
+                if (!newCommentsArray.isEmpty){
+                    for comm in newCommentsArray {
+                        if (commentsDictionary[comm] == nil){
+                            commentsDictionary[comm] = updatedComments[comm]
+                            comments = Array(commentsDictionary.values)
+                            
+                            self.CommentsTableView.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentsDictionary.count

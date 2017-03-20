@@ -34,31 +34,13 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         
-        
-        //removing all the posts from users that we are following
-        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
-            if (!withoutFollowing.isEmpty){
-                self.loadingIndicator.stopAnimating()
-                self.images = Array (self.imagesObject.values)
-                sleep(UInt32(0.09))
-                self.setupCollectionView()
-            }else{
-                self.loadingIndicator.stopAnimating()
-                sleep(UInt32(0.09))
-                self.setupCollectionView()
-            }
-        })
+        loadNewFeed()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
-        Model.sharedInstance.removeMyFollowingFromFeed { (withoutFollowing) in
-            self.loadingIndicator.stopAnimating()
-            self.images = Array (self.imagesObject.values)
-            sleep(UInt32(0.09))
-            self.setupCollectionView()
-        }
+        loadNewFeed()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,6 +52,25 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    func loadNewFeed(){
+        //removing all the posts from users that we are following
+        Model.sharedInstance.removeMyFollowingFromFeed({ (withoutFollowing) in
+            if (!withoutFollowing.isEmpty){
+                self.loadingIndicator.stopAnimating()
+                self.images = Array (withoutFollowing.values)
+                sleep(UInt32(0.09))
+                self.setupCollectionView()
+                self.searchCollectionView.reloadData()
+            }else{
+                self.loadingIndicator.stopAnimating()
+                self.images = Array (self.imagesObject.values)
+                sleep(UInt32(0.09))
+                self.setupCollectionView()
+                self.searchCollectionView.reloadData()
+            }
+        })
+        
+    }
     
     func setupCollectionView(){
         searchCollectionView.delegate = self
@@ -100,23 +101,25 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func handleRefresh(_ refreshControl: UIRefreshControl) {
+
+        loadNewFeed()
+        refreshControl.endRefreshing()
         
-        
-        Model.sharedInstance.getMostRecentPost(lastUpdateDate: nil) { (withoutFollowing) in
-            if (!withoutFollowing.isEmpty){
-                self.imagesObject = withoutFollowing
-                self.images = Array (self.imagesObject.values)
-                print("REFRESHED")
-                sleep(UInt32(0.01))
-                self.searchCollectionView.reloadData()
-                refreshControl.endRefreshing()
-            }else {
-                print("REFRESHED")
-                sleep(UInt32(0.01))
-                self.searchCollectionView.reloadData()
-                refreshControl.endRefreshing()
-            }
-        }
+//        Model.sharedInstance.getMostRecentPost(lastUpdateDate: nil) { (withoutFollowing) in
+//            if (!withoutFollowing.isEmpty){
+//                self.imagesObject = withoutFollowing
+//                self.images = Array (withoutFollowing.values)
+//                print("REFRESHED")
+//                sleep(UInt32(0.01))
+//                self.searchCollectionView.reloadData()
+//                refreshControl.endRefreshing()
+//            }else {
+//                print("REFRESHED")
+//                sleep(UInt32(0.01))
+//                self.searchCollectionView.reloadData()
+//                refreshControl.endRefreshing()
+//            }
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -133,7 +136,10 @@ class SearchController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagesObject.count
+        if let numOfObjects = images?.count {
+            return numOfObjects
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

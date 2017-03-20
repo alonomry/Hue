@@ -116,10 +116,6 @@ class Model{
                 self.imageFeed = Image.getAllImagesFromLocalDb(database: self.modelSQL?.database)!
             }
             
-//            if (!firstFetch){
-//                success(true)
-//            }
-            
             success(true)
         })
         
@@ -145,7 +141,6 @@ class Model{
             self.commentFeed = comments
             
             success(true)
-            
             
         })
     }
@@ -215,14 +210,17 @@ class Model{
     
     func getComment( callback:@escaping ([String :Comment])->Void){
         modelFirebase?.getComments(success: { (coments) in
+            
             callback(coments)
+            
         })
     }
     
     func saveComment(comment : Comment){
         //1.upload comment to firebase database
-        modelFirebase?.saveCommentToFireBase(comment: comment, success:{ (bool) in
+        modelFirebase?.saveCommentToFireBase(comment: comment, success:{ (bool, commentUID) in
             //2. upload comment to loacal storage
+            self.imageFeed[comment.imageUID!]?.comments?.append(commentUID)
             comment.addCommentToLocalDb(database: self.modelSQL?.database)
         })
     }
